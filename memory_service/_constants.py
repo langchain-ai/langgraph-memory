@@ -1,0 +1,5 @@
+PAYLOAD_KEY = "content"
+PATH_KEY = "path"
+PATCH_PATH = "user/{user_id}/patches/{function_name}"
+INSERT_PATH = "user/{user_id}/inserts/{function_name}/{event_id}"
+TIMESTAMP_KEY = "timestamp"
