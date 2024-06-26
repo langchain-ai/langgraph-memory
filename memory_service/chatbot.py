@@ -1,15 +1,15 @@
 """Example chatbot that incorporates user memories."""
 
 import os
+import uuid
 from datetime import datetime, timezone
-from typing import List
+from typing import List, Optional
 
 import langsmith
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import AnyMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableConfig
-from langchain_nomic.embeddings import NomicEmbeddings
 from langgraph.graph import START, StateGraph, add_messages
 from langgraph_sdk import get_client
 from typing_extensions import Annotated, TypedDict
@@ -32,6 +32,8 @@ class ChatConfigurable(TypedDict):
     user_id: str
     thread_id: str
     memory_service_url: str = ""
+    model: str
+    delay: Optional[float]
 
 
 def _ensure_configurable(config: RunnableConfig) -> ChatConfigurable:
@@ -39,9 +41,14 @@ def _ensure_configurable(config: RunnableConfig) -> ChatConfigurable:
     return ChatConfigurable(
         user_id=config["configurable"]["user_id"],
         thread_id=config["configurable"]["thread_id"],
+        mem_assistant_id=config["configurable"]["mem_assistant_id"],
         memory_service_url=config["configurable"].get(
             "memory_service_url", os.environ.get("MEMORY_SERVICE_URL", "")
         ),
+        model=config["configurable"].get(
+            "model", "accounts/fireworks/models/firefunction-v2"
+        ),
+        delay=config["configurable"].get("delay", 60),
     )
 
 
@@ -49,8 +56,11 @@ PROMPT = ChatPromptTemplate.from_messages(
     [
         (
             "system",
-            "You are a helpful and friendly chatbot.{user_info}\n\nSystem Time: {time}",
-        )
+            "You are a helpful and friendly chatbot. Get to know the user!"
+            " Ask questions! Be spontaneous!"
+            "{user_info}\n\nSystem Time: {time}",
+        ),
+        ("placeholder", "{messages}"),
     ]
 ).partial(
     time=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
@@ -69,21 +79,25 @@ async def query_memories(state: ChatState, config: RunnableConfig) -> ChatState:
     configurable: ChatConfigurable = config["configurable"]
     user_id = configurable["user_id"]
     index = utils.get_index()
-    embeddings = NomicEmbeddings(model="nomic-embed-text-v1.5")
+    embeddings = utils.get_embeddings()
 
     query = format_query(state["messages"])
-    vec = await embeddings.embed_query(query)
+    vec = await embeddings.aembed_query(query)
     # You can also filter by memory type, etc. here.
-    response = index.query(
-        vector=vec,
-        filter={"user": {"$eq": user_id}},
-        include_metadata=True,
-        top_k=10,
-        namespace=settings.SETTINGS.pinecone_namespace,
-    )
+    with langsmith.trace(
+        "pinecone_query", inputs={"query": query, "user_id": user_id}
+    ) as rt:
+        response = index.query(
+            vector=vec,
+            filter={"user_id": {"$eq": user_id}},
+            include_metadata=True,
+            top_k=10,
+            namespace=settings.SETTINGS.pinecone_namespace,
+        )
+        rt.outputs["response"] = response
     memories = []
     if matches := response.get("matches"):
-        memories = [m["metadata"]["memory"][constants.PAYLOAD_KEY] for m in matches]
+        memories = [m["metadata"][constants.PAYLOAD_KEY] for m in matches]
     return {
         "user_memories": memories,
     }
@@ -109,7 +123,8 @@ You have noted the following memorable events from previous interactions with th
 
 async def bot(state: ChatState, config: RunnableConfig) -> ChatState:
     """Prompt the bot to resopnd to the user, incorporating memories (if provided)."""
-    model = init_chat_model("claude-3-5-sonnet-20240620")
+    configurable = _ensure_configurable(config)
+    model = init_chat_model(configurable["model"])
     chain = PROMPT | model
     memories = format_memories(state["user_memories"])
     m = await chain.ainvoke(
@@ -130,67 +145,65 @@ async def post_messages(state: ChatState, config: RunnableConfig) -> ChatState:
     configurable = _ensure_configurable(config)
     langgraph_client = get_client(url=configurable["memory_service_url"])
     thread_id = config["configurable"]["thread_id"]
+    # Hash "memory_{thread_id}" to get a new uuid5 for the memory id
+    memory_thread_id = uuid.uuid5(uuid.NAMESPACE_URL, f"memory_{thread_id}")
     try:
-        thread = await langgraph_client.threads.create(thread_id=thread_id)
+        await langgraph_client.threads.get(thread_id=memory_thread_id)
     except Exception:
-        thread = await langgraph_client.threads.get(thread_id=thread_id)
+        await langgraph_client.threads.create(thread_id=memory_thread_id)
 
     await langgraph_client.runs.create(
-        thread["thread_id"],
+        memory_thread_id,
+        assistant_id=configurable["mem_assistant_id"],
         input={
             "messages": state["messages"],  # the service dedupes messages
         },
         config={
-            "system_prompt": "You are a helpful and friendly chatbot.",
             "configurable": {
-                "user_id": thread["user_id"],
-                "thread_id": thread["thread_id"],
+                "user_id": configurable["user_id"],
+                "delay": configurable["delay"],
                 "schemas": {
-                    "system_prompt": "Extract any memorable events from the user's"
-                    " messages that you would like to remember.",
                     "MemorableEvent": {
+                        "system_prompt": "Extract any memorable events from the user's"
+                        " messages that you would like to remember.",
+                        "update_mode": "insert",
                         "function": {
                             "name": "memorable_event",
-                            "description": "",
+                            "description": "Any event, observation, insight, or "
+                            "other detail that you may want to recall in "
+                            "later interactions with the user.",
                             "parameters": {
-                                "name": "memorable_event",
-                                "description": "Any event, observation, insight, or "
-                                "other detail that you may want to recall in "
-                                "later interactions with the user.",
-                                "parameters": {
-                                    "description": "Any event, observation, insight, or"
-                                    " other detail that you may want to recall in"
-                                    " later interactions with the user.",
-                                    "properties": {
-                                        "description": {
-                                            "title": "Description",
-                                            "type": "string",
-                                        },
-                                        "participants": {
-                                            "description": "Names of participants in"
-                                            " the event and their relationship to the "
-                                            "user.",
-                                            "items": {"type": "string"},
-                                            "title": "Participants",
-                                            "type": "array",
-                                        },
+                                "description": "Any event, observation, insight, or"
+                                " other detail that you may want to recall in"
+                                " later interactions with the user.",
+                                "properties": {
+                                    "description": {
+                                        "title": "Description",
+                                        "type": "string",
                                     },
-                                    "required": ["description", "participants"],
-                                    "title": "memorable_event",
-                                    "type": "object",
+                                    "participants": {
+                                        "description": "Names of participants in"
+                                        " the event and their relationship to the "
+                                        "user.",
+                                        "items": {"type": "string"},
+                                        "title": "Participants",
+                                        "type": "array",
+                                    },
                                 },
+                                "required": ["description", "participants"],
+                                "title": "memorable_event",
+                                "type": "object",
                             },
-                        }
+                        },
                     },
                 },
             },
         },
-        multitask_strategy="interrupt",
+        multitask_strategy="rollback",
     )
 
     return {
-        "messages": state["messages"],
-        "user_memories": [],
+        "messages": [],
     }
 
 

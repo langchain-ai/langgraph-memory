@@ -3,14 +3,12 @@
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 import uuid
 from datetime import datetime, timezone
 
 from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
-from langchain_nomic.embeddings import NomicEmbeddings
 from langgraph.constants import Send
 from langgraph.graph import END, START, StateGraph
 from trustcall import create_extractor
@@ -63,13 +61,12 @@ async def extract_patch_memories(
         tools=[memory_config["function"]],
         tool_choice=memory_config["function"]["name"],
     )
-    existing = state["user_state"]
-    result = await extractor.ainvoke(
-        {
-            "messages": messages,
-            "existing": {memory_config["function"]["name"]: existing},
-        }
-    )
+    inputs = {
+        "messages": messages,
+    }
+    if existing := state["user_state"]:
+        inputs["existing"] = {memory_config["function"]["name"]: existing}
+    result = await extractor.ainvoke(inputs, config)
     return {"responses": result["responses"]}
 
 
@@ -82,7 +79,7 @@ async def upsert_patched_state(
         user_id=configurable["user_id"], function_name=state["function_name"]
     )
     serialized = state["responses"][0].model_dump_json()
-    embeddings = NomicEmbeddings(model="nomic-embed-text-v1.5")
+    embeddings = utils.get_embeddings()
     vector = await embeddings.aembed_query(serialized)
     utils.get_index().upsert(
         vectors=[
@@ -90,9 +87,10 @@ async def upsert_patched_state(
                 "id": path,
                 "values": vector,
                 "metadata": {
-                    constants.PAYLOAD_KEY: json.loads(serialized),
+                    constants.PAYLOAD_KEY: serialized,
                     constants.PATH_KEY: path,
                     constants.TIMESTAMP_KEY: datetime.now(tz=timezone.utc),
+                    "user_id": configurable["user_id"],
                 },
             }
         ],
@@ -124,7 +122,7 @@ async def insert_memories(
 ) -> dict:
     """Insert the user's state to the database."""
     configurable = utils.ensure_configurable(config["configurable"])
-    embeddings = NomicEmbeddings(model="nomic-embed-text-v1.5")
+    embeddings = utils.get_embeddings()
     serialized = [r.model_dump_json() for r in state["responses"]]
     # You could alternatively do multi-vector lookup based on the schema.
     vectors = await embeddings.aembed_documents(serialized)
@@ -142,9 +140,10 @@ async def insert_memories(
             "id": path,
             "values": vector,
             "metadata": {
-                constants.PAYLOAD_KEY: json.loads(serialized),
+                constants.PAYLOAD_KEY: serialized,
                 constants.PATH_KEY: path,
                 constants.TIMESTAMP_KEY: current_time,
+                "user_id": configurable["user_id"],
             },
         }
         for path, vector, serialized in zip(paths, vectors, serialized)
