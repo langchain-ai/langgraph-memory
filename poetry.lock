@@ -507,13 +507,13 @@ files = [
 
 [[package]]
 name = "fsspec"
-version = "2024.6.0"
+version = "2024.6.1"
 description = "File-system specification"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "fsspec-2024.6.0-py3-none-any.whl", hash = "sha256:58d7122eb8a1a46f7f13453187bfea4972d66bf01618d37366521b1998034cee"},
-    {file = "fsspec-2024.6.0.tar.gz", hash = "sha256:f579960a56e6d8038a9efc8f9c77279ec12e6299aa86b0769a7e9c46b94527c2"},
+    {file = "fsspec-2024.6.1-py3-none-any.whl", hash = "sha256:3cb443f8bcd2efb31295a5b9fdb02aee81d8452c80d28f97a6d0959e6cee101e"},
+    {file = "fsspec-2024.6.1.tar.gz", hash = "sha256:fad7d7e209dd4c1208e3bbfda706620e0da5142bebbd9c384afb95b07e798e49"},
 ]
 
 [package.extras]
@@ -862,13 +862,13 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
 [[package]]
 name = "langchain-anthropic"
-version = "0.1.16"
+version = "0.1.17"
 description = "An integration package connecting AnthropicMessages and LangChain"
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "langchain_anthropic-0.1.16-py3-none-any.whl", hash = "sha256:0d3f66b7ffb2d4ef739ef87c4b096f0dbbf0ce12f988205d1fcaa1da2c9d09fa"},
-    {file = "langchain_anthropic-0.1.16.tar.gz", hash = "sha256:28187dfb19389772e0abba98eeb0210ed3d99ab0a73f2e6707aa46c9bbbbe407"},
+    {file = "langchain_anthropic-0.1.17-py3-none-any.whl", hash = "sha256:e139602594deebd5deb1531434823889390a58c3b99df911f9ced3ec7cc0746e"},
+    {file = "langchain_anthropic-0.1.17.tar.gz", hash = "sha256:bd8b16d07c6b78228eaf76ca6aae28e29a186e0048aab79effd35ccf819d1851"},
 ]
 
 [package.dependencies]
@@ -900,36 +900,36 @@ tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<9.0.0"
 
 [[package]]
 name = "langchain-fireworks"
-version = "0.1.3"
+version = "0.1.4"
 description = "An integration package connecting Fireworks and LangChain"
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "langchain_fireworks-0.1.3-py3-none-any.whl", hash = "sha256:44e83491a3a9d0a9bd6b761e72b5553d85321cc878e36b68d99d432fba39db33"},
-    {file = "langchain_fireworks-0.1.3.tar.gz", hash = "sha256:667daea544512a0c2598d8f0f77b4176476bdc51bdf03e91f865922d51d39a85"},
+    {file = "langchain_fireworks-0.1.4-py3-none-any.whl", hash = "sha256:aab2edddea490a5931c556bfc0f2b8a07a18f57a25bf8c77b961b5e37001e75a"},
+    {file = "langchain_fireworks-0.1.4.tar.gz", hash = "sha256:550bec787b2660014d421e16ce6c4f51851067db14eb299f5757231517eb9d77"},
 ]
 
 [package.dependencies]
 aiohttp = ">=3.9.1,<4.0.0"
 fireworks-ai = ">=0.13.0"
-langchain-core = ">=0.1.52,<0.3"
+langchain-core = ">=0.2.2,<0.3"
 openai = ">=1.10.0,<2.0.0"
 requests = ">=2,<3"
 
 [[package]]
 name = "langchain-openai"
-version = "0.1.10"
+version = "0.1.13"
 description = "An integration package connecting OpenAI and LangChain"
 optional = false
 python-versions = "<4.0,>=3.8.1"
 files = [
-    {file = "langchain_openai-0.1.10-py3-none-any.whl", hash = "sha256:62eb000980eb45e4f16c88acdbaeccf3d59266554b0dd3ce6bebea1bbe8143dd"},
-    {file = "langchain_openai-0.1.10.tar.gz", hash = "sha256:30f881f8ccaec28c054759837c41fd2a2264fcc5564728ce12e1715891a9ce3c"},
+    {file = "langchain_openai-0.1.13-py3-none-any.whl", hash = "sha256:4344b6c5c67088a28eed80ba763157fdd1d690cee679966a021b42f305dbf7b5"},
+    {file = "langchain_openai-0.1.13.tar.gz", hash = "sha256:03318669bcb3238f7d1bb043329f91d150ca09246f1faf569ef299f535405c71"},
 ]
 
 [package.dependencies]
 langchain-core = ">=0.2.2,<0.3"
-openai = ">=1.26.0,<2.0.0"
+openai = ">=1.32.0,<2.0.0"
 tiktoken = ">=0.7,<1"
 
 [[package]]
@@ -964,13 +964,13 @@ langchain-core = ">=0.2.10,<0.3.0"
 
 [[package]]
 name = "langgraph"
-version = "0.1.1"
+version = "0.1.4"
 description = "Building stateful, multi-actor applications with LLMs"
 optional = false
 python-versions = "<4.0,>=3.9.0"
 files = [
-    {file = "langgraph-0.1.1-py3-none-any.whl", hash = "sha256:6d798072625fd23ff155d40ee823b4e5eb00731ad8a64e2551fd6ae0cb53aec4"},
-    {file = "langgraph-0.1.1.tar.gz", hash = "sha256:cea9831c334f36bae9caa66637422e37f76f069b47233ceb253be6cfb3ecb35e"},
+    {file = "langgraph-0.1.4-py3-none-any.whl", hash = "sha256:7473fd87fc4e9f796a300be810cf6fbdcf91ca5355080c78fc502153d1b2752f"},
+    {file = "langgraph-0.1.4.tar.gz", hash = "sha256:cd5c301b70d49fe4de88c4f11c9636070ff943af887615e7662df6678c86eb06"},
 ]
 
 [package.dependencies]
@@ -978,13 +978,13 @@ langchain-core = ">=0.2,<0.3"
 
 [[package]]
 name = "langgraph-cli"
-version = "0.1.44"
+version = "0.1.47"
 description = "CLI for interacting with LangGraph API"
 optional = false
 python-versions = "<4.0.0,>=3.9.0"
 files = [
-    {file = "langgraph_cli-0.1.44-py3-none-any.whl", hash = "sha256:721968ab9d9d74ba824e93f4bb08de094795888b7ccea3792962f051a9cdb419"},
-    {file = "langgraph_cli-0.1.44.tar.gz", hash = "sha256:a31f4a71abd4a3c39f886811c69ac433a20bbd7eeca6bd47d8f8ec49afbfcebb"},
+    {file = "langgraph_cli-0.1.47-py3-none-any.whl", hash = "sha256:3767941dbac4128b1d87fa2dc24afde4015904890ab9682e6b956aae51c0baea"},
+    {file = "langgraph_cli-0.1.47.tar.gz", hash = "sha256:292eb99334efd53c29f40cef3e0c55d198da6e99ee14d0987210997be6e56d32"},
 ]
 
 [package.dependencies]
@@ -1229,13 +1229,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.35.5"
+version = "1.35.7"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.7.1"
 files = [
-    {file = "openai-1.35.5-py3-none-any.whl", hash = "sha256:28d92503c6e4b6a32a89277b36693023ef41f60922a4b5c8c621e8c5697ae3a6"},
-    {file = "openai-1.35.5.tar.gz", hash = "sha256:67ef289ae22d350cbf9381d83ae82c4e3596d71b7ad1cc886143554ee12fe0c9"},
+    {file = "openai-1.35.7-py3-none-any.whl", hash = "sha256:3d1e0b0aac9b0db69a972d36dc7efa7563f8e8d65550b27a48f2a0c2ec207e80"},
+    {file = "openai-1.35.7.tar.gz", hash = "sha256:009bfa1504c9c7ef64d87be55936d142325656bbc6d98c68b669d6472e4beb09"},
 ]
 
 [package.dependencies]

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
+from langchain_core.messages import AnyMessage
 from langchain_core.pydantic_v1 import BaseModel
 from langgraph.graph import add_messages
 from typing_extensions import Annotated, Literal, TypedDict
@@ -55,7 +56,7 @@ class GraphConfig(TypedDict, total=False):
 
 
 class State(TypedDict):
-    messages: Annotated[list, add_messages]
+    messages: Annotated[List[AnyMessage], add_messages]
     """The messages in the conversation."""
     eager: bool
 

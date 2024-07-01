@@ -20,6 +20,9 @@ from memory_service import _settings as settings
 from memory_service import _utils as utils
 
 logger = logging.getLogger("memory")
+# Handle patch memory, where we update a single document in the database.
+# If the document doesn't exist, the LLM will generate a new one.
+# Otherwise, it will generate JSON patches to update the existing document.
 
 
 async def fetch_patched_state(
@@ -99,7 +102,29 @@ async def upsert_patched_state(
     return {"user_state": {}}
 
 
-async def extract_insertion_memories(
+patch_builder = StateGraph(schemas.SingleExtractorState, schemas.GraphConfig)
+patch_builder.add_node(fetch_patched_state)
+patch_builder.add_node(extract_patch_memories)
+patch_builder.add_node(upsert_patched_state)
+patch_builder.add_edge(START, "fetch_patched_state")
+patch_builder.add_edge("fetch_patched_state", "extract_patch_memories")
+
+
+def should_commit_patch(
+    state: schemas.SingleExtractorState, config: RunnableConfig
+) -> Literal["upsert_patched_state", "__end__"]:
+    """Whether there are things extracted to commit to the DB."""
+    return "upsert_patched_state" if state["responses"] else END
+
+
+patch_builder.add_conditional_edges("extract_patch_memories", should_commit_patch)
+patch_graph = patch_builder.compile()
+
+# Handle semantic memory, where we insert each memory event
+# as a new document in the database.
+
+
+async def extract_semantic_memories(
     state: schemas.SingleExtractorState, config: RunnableConfig
 ) -> dict:
     """Extract embeddable "events"."""
@@ -155,50 +180,24 @@ async def insert_memories(
     return {"user_state": {}}
 
 
-def route_inbound(
+semantic_builder = StateGraph(schemas.SingleExtractorState, schemas.GraphConfig)
+# Lots of quality improvements can be made here, such as:
+# - Fetch similar memories and prompt model to combine or extrapolate
+# - Adding advanced indexing by the memory schema (like importance, relevance, etc.)
+semantic_builder.add_node(extract_semantic_memories)
+semantic_builder.add_node(insert_memories)
+semantic_builder.add_edge(START, "extract_semantic_memories")
+
+
+def should_insert(
     state: schemas.SingleExtractorState, config: RunnableConfig
-) -> Literal["fetch_patched_state", "extract_insertion_memories"]:
-    configurable = utils.ensure_configurable(config["configurable"])
-    update_mode = configurable["schemas"][state["function_name"]]["update_mode"]
-    match update_mode:
-        case "patch":
-            return "fetch_patched_state"
-        case "insert":
-            return "extract_insertion_memories"
-        case _:
-            raise ValueError(f"Unknown update mode: {update_mode}")
-
-
-extraction_builder = StateGraph(schemas.SingleExtractorState, schemas.GraphConfig)
-extraction_builder.add_node(fetch_patched_state)
-extraction_builder.add_node(extract_patch_memories)
-extraction_builder.add_node(upsert_patched_state)
-extraction_builder.add_node(extract_insertion_memories)
-extraction_builder.add_node(insert_memories)
-
-extraction_builder.add_conditional_edges(START, route_inbound)
-extraction_builder.add_edge("fetch_patched_state", "extract_patch_memories")
-
-
-def should_commit(
-    state: schemas.SingleExtractorState, config: RunnableConfig
-) -> Literal["insert_memories", "upsert_patched_state", "__end__"]:
+) -> Literal["insert_memories", "__end__"]:
     """Whether there are things extracted to commit to the DB."""
-    if not state["responses"]:
-        return END
-    configurable = utils.ensure_configurable(config["configurable"])
-    function = configurable["schemas"][state["function_name"]]
-    commit_node_name = (
-        "insert_memories"
-        if function["update_mode"] == "insert"
-        else "upsert_patched_state"
-    )
-    return commit_node_name
+    return "insert_memories" if state["responses"] else END
 
 
-extraction_builder.add_conditional_edges("extract_patch_memories", should_commit)
-extraction_builder.add_conditional_edges("extract_insertion_memories", should_commit)
-extraction_graph = extraction_builder.compile()
+semantic_builder.add_conditional_edges("extract_semantic_memories", should_insert)
+semantic_graph = semantic_builder.compile()
 
 
 # This graph is public facing. It receives conversations and distibutes them to the
@@ -229,7 +228,8 @@ async def schedule(state: schemas.State, config: RunnableConfig) -> dict:
 # Create the graph + all nodes
 builder = StateGraph(schemas.State, schemas.GraphConfig)
 builder.add_node(schedule)
-builder.add_node("extract", extraction_graph)
+builder.add_node("handle_patch_memory", patch_graph)
+builder.add_node("handle_semantic_memory", semantic_graph)
 
 # Add edges
 builder.add_edge(START, "schedule")
@@ -241,9 +241,18 @@ def scatter_schemas(state: schemas.State, config: RunnableConfig) -> list[Send]:
     These will be executed in parallel.
     """
     configuration = utils.ensure_configurable(config["configurable"])
-    return [
-        Send("extract", {**state, "function_name": k}) for k in configuration["schemas"]
-    ]
+    sends = []
+    for k, v in configuration["schemas"].items():
+        update_mode = v["update_mode"]
+        match update_mode:
+            case "patch":
+                target = "handle_patch_memory"
+            case "insert":
+                target = "handle_semantic_memory"
+            case _:
+                raise ValueError(f"Unknown update mode: {update_mode}")
+        sends.append(Send(target, {**state, "function_name": k}))
+    return sends
 
 
 builder.add_conditional_edges("schedule", scatter_schemas)

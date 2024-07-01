@@ -1,9 +1,10 @@
+import json
 from typing import List
 from unittest.mock import MagicMock, patch
 
 import pytest
 from langchain_core.pydantic_v1 import BaseModel, Field
-from langsmith import expect, test
+from langsmith import expect, get_current_run_tree, test
 
 from memory_service._constants import PATCH_PATH
 from memory_service._schemas import GraphConfig, MemoryConfig
@@ -31,7 +32,7 @@ def core_memory_func() -> MemoryConfig:
     }
 
 
-@test(output_keys="num_mems_expected")
+@test(output_keys=["num_mems_expected"])
 @pytest.mark.parametrize(
     "messages, existing, num_mems_expected",
     [
@@ -88,9 +89,12 @@ async def test_patch_memory(
             index.upsert.assert_called_once()
             # Get named call args
             vectors = index.upsert.call_args.kwargs["vectors"]
+            rt = get_current_run_tree()
+            rt.outputs = {"upserted": [v["metadata"]["content"] for v in vectors]}
             assert len(vectors) == 1
             # Check if the memory was added
-            memories = vectors[0]["metadata"]["content"]["memories"]
+            mem = vectors[0]["metadata"]["content"]
+            memories = json.loads(mem)["memories"]
             expect(len(memories)).to_equal(num_mems_expected)
 
 
@@ -119,7 +123,7 @@ def memorable_event_func() -> MemoryConfig:
     }
 
 
-@test(output_keys="num_events_expected")
+@test(output_keys=["num_events_expected"])
 @pytest.mark.parametrize(
     "messages, num_events_expected",
     [

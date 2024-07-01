@@ -6,6 +6,24 @@ Inspired by papers like [MemGPT](https://memgpt.ai/) and distilled from our own 
 extracts memories from chat interactions and persists them to a database. This information can later be read or queried semantically
 to provide personalized context when your bot is responding to a particular user.
 
+The memory graph handles thread process deduplication and supports continuous updates to a single "memory schema" as well as "event-based" memories that can be queried semantically.
+
+![Memory Diagram](./img/memory_graph.png)
+
+#### Project Structure
+
+```bash
+├── langgraph.json # LangGraph Cloud Configuration
+├── memory_service
+│   ├── __init__.py
+│   └── graph.py # Define the memory service
+├── poetry.lock
+├── pyproject.toml # Project dependencies
+└── tests # Add testing + evaluation logic
+    └── evals
+        └── test_memories.py
+```
+
 ## Quickstart
 
 This quick start will get your memory service deployed on [LangGraph Cloud](https://langchain-ai.github.io/langgraph/cloud/). Once created, you can interact with it from any API.
@@ -52,11 +70,20 @@ Assuming you've followed the steps above, in just a couple of minutes, you shoul
 
 Now let's try it out.
 
-#### How to connect to the memory service
+## How to connect to the memory service
 
 Check out the [example notebook](./example.ipynb) to show how to connect your chat bot (in this case a second graph) to your new memory service.
 
 This chat bot reads from the same memory DB as your memory service to easily query from "recall memory".
+
+Connecting to this type of memory service typically follows an interaction pattern similar to the one outlined below:
+
+![Interaction Pattern](./img/memory_interactions.png)
+
+A typical user-facing application you'd build to connect with this service would have 3 or more nodes. The first node queries the DB for useful memories. The second node, which contains the LLM, generates the response. The third node posts the new  messages to the service.
+
+The service waits for a pre-determined interval before it considers the thread "complete". If the user queries a second time within that interval, the memory run is [rolled-back](https://langchain-ai.github.io/langgraph/cloud/how-tos/cloud_examples/rollback_concurrent/?h=roll) to avoid duplicate processing of a thread.
+
 
 ## How to evaluate
 
