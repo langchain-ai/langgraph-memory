@@ -4,7 +4,9 @@ resolution-markers = [
     "python_full_version < '3.12'",
     "python_full_version < '3.12'",
     "python_full_version >= '3.12' and python_full_version < '3.12.4'",
-    "python_full_version < '3.13'",
+    "python_full_version < '3.12'",
+    "python_full_version < '3.12.4'",
+    "python_full_version >= '3.12.4'",
     "python_full_version >= '3.13'",
 ]
 
@@ -673,21 +675,6 @@ wheels = [
 ]
 
 [[package]]
-name = "langchain-pinecone"
-version = "0.2.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "aiohttp" },
-    { name = "langchain-core" },
-    { name = "numpy" },
-    { name = "pinecone-client" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/f4/4c/0b953564294147f32ee0b6c0fed34b67b2b11900478bc42e0b3d51807396/langchain_pinecone-0.2.0.tar.gz", hash = "sha256:8a320be9420b686625a5024a174054846b1cd4cf3c3fe9df602b2c6d7147b71c", size = 10352 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b1/c4/1040a3d55ec6ad73835a9b4c5344d499f1a107fd9a432d97e890e7f9261c/langchain_pinecone-0.2.0-py3-none-any.whl", hash = "sha256:ab7e54de4ad81e3c7e68d4b4c321798ef1cc8833bb9c52a620a9a4f552ecffc6", size = 11610 },
-]
-
-[[package]]
 name = "langchain-text-splitters"
 version = "0.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -701,15 +688,15 @@ wheels = [
 
 [[package]]
 name = "langgraph"
-version = "0.2.24"
+version = "0.2.25"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "langchain-core" },
     { name = "langgraph-checkpoint" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/35/cb/f85a7174e5195794b5eb6252266da52101b5cf3461215cb9bd1f29363aa0/langgraph-0.2.24.tar.gz", hash = "sha256:141f08dcba870c069d45ab086146331aae918391ddcffcd3025f9c0adea49eb4", size = 88712 }
+sdist = { url = "https://files.pythonhosted.org/packages/5c/cf/b071ad5c64a98aefcfa34f9ada6483ea3ed62e86e365c1949dec2bbb8c20/langgraph-0.2.25.tar.gz", hash = "sha256:86e1d8e0eba38dac3334cd7ce87b1a13b669574e3fa17c0acc3f71c26d338586", size = 88889 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/93/d9cb7fbc7e766c8713b9699f3c8ff00b1c08d637d050f759e45c9c1afb11/langgraph-0.2.24-py3-none-any.whl", hash = "sha256:416362e1f22f3d396d10d03be1330bf757027062e7cb00eef91283fc408487da", size = 107319 },
+    { url = "https://files.pythonhosted.org/packages/8d/72/fceae0bc0d42cea55c4cc4872b0610558eb7de4e4a438e8fb28d3ef09207/langgraph-0.2.25-py3-none-any.whl", hash = "sha256:4133ca873ccefd35bed3aa71cec51f54f75e67385944e78e42216a99fa014e6b", size = 107531 },
 ]
 
 [[package]]
@@ -739,16 +726,16 @@ wheels = [
 
 [[package]]
 name = "langgraph-sdk"
-version = "0.1.30"
+version = "0.1.31"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "httpx" },
     { name = "httpx-sse" },
     { name = "orjson" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/40/c8/61641f1d49d5e31c41db86661692fcdfef91af06a393da14b364cd2b44a9/langgraph_sdk-0.1.30.tar.gz", hash = "sha256:1b9cf98a797914cfcc647b68e5039cc7768cb7a94c42e3391e3b47ebf0357841", size = 13329 }
+sdist = { url = "https://files.pythonhosted.org/packages/76/6c/4c60a2a5cf407e0870cea6c401e6b47ad40b6d2a53a503e9d62ca8f70ae0/langgraph_sdk-0.1.31.tar.gz", hash = "sha256:37a3b4e250ef98daab05c7e758929e6712818d6676473ea6acb1732f51fd0bd2", size = 13886 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e5/9b/d0c24bb2679b8ac78574d85a4313db9bbed5269121fdb2810dfebd731177/langgraph_sdk-0.1.30-py3-none-any.whl", hash = "sha256:e82d4e8913d493dbcf20e0bb05db495fc2469244753635c23b03e3b77c5f8ae6", size = 13791 },
+    { url = "https://files.pythonhosted.org/packages/ae/c5/f7f8e4f3ec412fdffcf41a1ec7eb0545a2424cd9c6bf0dcf48cd6b690985/langgraph_sdk-0.1.31-py3-none-any.whl", hash = "sha256:42f0cea3173e799fac21ccd7bf6729dd7f8935728c740ceaa6a4513cacf51db7", size = 14311 },
 ]
 
 [[package]]
@@ -775,7 +762,6 @@ dependencies = [
     { name = "langchain-anthropic" },
     { name = "langchain-core" },
     { name = "langchain-openai" },
-    { name = "langchain-pinecone" },
     { name = "langgraph" },
     { name = "langgraph-sdk" },
     { name = "trustcall" },
@@ -796,15 +782,14 @@ requires-dist = [
     { name = "langchain-anthropic", specifier = ">=0.2.1" },
     { name = "langchain-core", specifier = ">=0.3.5,<0.4.0" },
     { name = "langchain-openai", specifier = ">=0.2.0" },
-    { name = "langchain-pinecone", specifier = ">=0.1.1" },
     { name = "langgraph", specifier = ">=0.1.0" },
     { name = "langgraph-cli", marker = "extra == 'dev'", specifier = ">=0.1.43" },
-    { name = "langgraph-sdk", specifier = ">=0.1.30" },
+    { name = "langgraph-sdk", specifier = ">=0.1.31" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.10.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.2.2" },
     { name = "pytest-asyncio", marker = "extra == 'dev'" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.4.10" },
-    { name = "trustcall", specifier = ">=0.0.17" },
+    { name = "trustcall", specifier = ">=0.0.18" },
 ]
 
 [[package]]
@@ -1123,44 +1108,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz", hash = "sha256:026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002", size = 148788 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/08/aa/cc0199a5f0ad350994d660967a8efb233fe0416e4639146c089643407ce6/packaging-24.1-py3-none-any.whl", hash = "sha256:5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124", size = 53985 },
-]
-
-[[package]]
-name = "pinecone-client"
-version = "5.0.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "certifi" },
-    { name = "pinecone-plugin-inference" },
-    { name = "pinecone-plugin-interface" },
-    { name = "tqdm" },
-    { name = "typing-extensions" },
-    { name = "urllib3" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/98/a4/739fe0a4a173658d541206ec7fdb0cc4c9ddc364de216af668b988bf0868/pinecone_client-5.0.1.tar.gz", hash = "sha256:11c33ff5d1c38a6ce69e69fe532c0f22f312fb28d761bb30b3767816d3181d64", size = 122207 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/55/d0/c64336b8f76e63296d04b885c545c0872ff070e6b2bc725dd0ff3ae681dc/pinecone_client-5.0.1-py3-none-any.whl", hash = "sha256:c8f7835e1045ba84e295f217a8e85573ffb80b41501bbc1af6d92c9631c567a7", size = 244818 },
-]
-
-[[package]]
-name = "pinecone-plugin-inference"
-version = "1.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pinecone-plugin-interface" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/03/96/a5738492f131166eb2f9e99fb15a724cf482192e8443bf7069809485432b/pinecone_plugin_inference-1.1.0.tar.gz", hash = "sha256:283e5ae4590b901bf2179beb56fc3d1b715e63582f37ec7abb0708cf70912d1f", size = 48997 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d8/5e/a7eb453cfb3aa9c8c995a1dca5fcf57f79b67400593d5c6759571567e30c/pinecone_plugin_inference-1.1.0-py3-none-any.whl", hash = "sha256:32c61aba21c9a28fdcd0e782204c1ca641aeb3fd6e42764fbf0de8186eb657ec", size = 85353 },
-]
-
-[[package]]
-name = "pinecone-plugin-interface"
-version = "0.0.7"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/f4/fb/e8a4063264953ead9e2b24d9b390152c60f042c951c47f4592e9996e57ff/pinecone_plugin_interface-0.0.7.tar.gz", hash = "sha256:b8e6675e41847333aa13923cc44daa3f85676d7157324682dc1640588a982846", size = 3370 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/3b/1d/a21fdfcd6d022cb64cef5c2a29ee6691c6c103c4566b41646b080b7536a5/pinecone_plugin_interface-0.0.7-py3-none-any.whl", hash = "sha256:875857ad9c9fc8bbc074dbe780d187a2afd21f5bfe0f3b08601924a61ef1bba8", size = 6249 },
 ]
 
 [[package]]
@@ -1679,16 +1626,16 @@ wheels = [
 
 [[package]]
 name = "trustcall"
-version = "0.0.17"
+version = "0.0.18"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dydantic" },
     { name = "jsonpatch" },
     { name = "langgraph" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d3/94/e10bca852de571a4fa124ca6a00900d19a1edab70d6fc8677454743f6490/trustcall-0.0.17.tar.gz", hash = "sha256:be7c35a4ae78bdcac764ba26b9c98b351aa6ad92a64fdbd1708ff4c693bcd9eb", size = 16932 }
+sdist = { url = "https://files.pythonhosted.org/packages/a4/0f/8e5a479735296172155395ce0d4ec469e9ffc407fb1141fdee2e7cc76276/trustcall-0.0.18.tar.gz", hash = "sha256:9168c8ef509eae61ecd80ec82aa5d93cc5eb087bbaec5b7beb455c8fd2a7ee6e", size = 16968 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/93/aa/e7f3e0acf2e02cce4f16e71afffd8aa668858710e2c1694aec5c2db95b64/trustcall-0.0.17-py3-none-any.whl", hash = "sha256:8b877fabc458075dc4e214786c5b7de1e20dcbc9355d52a6e549adf56d3c6bd6", size = 15321 },
+    { url = "https://files.pythonhosted.org/packages/50/ee/e681166f33db64639a738d2708756cfa6aefb3ff16915f699ed3fc56dce6/trustcall-0.0.18-py3-none-any.whl", hash = "sha256:47c0ecca52764f48ea490f226ba665220f0741c98157e6f4046488c9b18da4e3", size = 15370 },
 ]
 
 [[package]]

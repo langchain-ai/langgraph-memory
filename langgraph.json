@@ -1,7 +1,8 @@
 {
   "dependencies": ["."],
   "graphs": {
-    "memory": "./src/memory_service/graph.py:memgraph"
+    "memory": "./src/memory_service/graph.py:memgraph",
+    "chat": "./src/example_app/__init__.py:chat_graph"
   },
   "env": ".env"
 }

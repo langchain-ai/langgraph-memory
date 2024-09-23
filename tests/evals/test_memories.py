@@ -5,10 +5,10 @@ from unittest.mock import MagicMock, patch
 import pytest
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langsmith import expect, get_current_run_tree, test
-
+from memory_service._configuration import Configuration
 from memory_service._constants import PATCH_PATH
 from memory_service.graph import memgraph
-from memory_service.state import GraphConfig, MemoryConfig
+from memory_service.state import MemoryConfig
 
 
 # To test the patch-based memory
@@ -76,7 +76,7 @@ async def test_patch_memory(
                 "messages": messages,
             },
             {
-                "configurable": GraphConfig(
+                "configurable": Configuration(
                     delay=0.1,
                     user_id=user_id,
                     thread_id=thread_id,
@@ -164,7 +164,7 @@ async def test_insert_memory(
                 "messages": messages,
             },
             {
-                "configurable": GraphConfig(
+                "configurable": Configuration(
                     delay=0.1,
                     user_id=user_id,
                     thread_id=thread_id,

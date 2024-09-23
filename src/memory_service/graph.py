@@ -2,20 +2,16 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
-import uuid
-from datetime import datetime, timezone
+from dataclasses import asdict
 
 from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
 from langgraph.constants import Send
-from langgraph.graph import END, START, StateGraph
+from langgraph.graph import StateGraph
 from trustcall import create_extractor
-from typing_extensions import Literal
 
 from memory_service import _configuration as configuration
-from memory_service import _constants as constants
 from memory_service import _utils as utils
 from memory_service import state as schemas
 
@@ -25,218 +21,70 @@ logger = logging.getLogger("memory")
 # Otherwise, it will generate JSON patches to update the existing document.
 
 
-async def fetch_patched_state(
-    state: schemas.SingleExtractorState, config: RunnableConfig
-) -> dict:
-    """Fetch the user's state from the database.
-
-    This is a placeholder function. You should replace this with a function
-    that fetches the user's state from the database.
-    """
-    configurable = configuration.Configuration.from_runnable_config(config)
-    path = constants.PATCH_PATH.format(
-        user_id=configurable.user_id, function_name=state.function_name
-    )
-    # TODO: does pinecone have an async api in their SDK...?
-    response = utils.get_index().fetch(
-        ids=[path], namespace=configurable.pinecone_namespace
-    )
-    if vectors := response.get("vectors"):
-        document = vectors[path]
-        payload = document["metadata"][constants.PAYLOAD_KEY]
-        return {"user_state": payload}
-    return {"user_state": None}
-
-
-async def extract_patch_memories(
-    state: schemas.SingleExtractorState, config: RunnableConfig
+async def handle_patch_memory(
+    state: schemas.PatchNodeState, config: RunnableConfig
 ) -> dict:
     """Extract the user's state from the conversation."""
     configurable = configuration.Configuration.from_runnable_config(config)
-    schemas = configurable.schemas
-    memory_config = schemas[state.function_name]
+    existing = state.user_states.get(state.function_name)
+    memory_config = configurable.schemas[state.function_name]
     llm = init_chat_model(model=configurable.model)
-    messages = utils.prepare_messages(
-        state.messages, memory_config.get("system_prompt") or ""
-    )
+    messages = utils.prepare_messages(state.messages, memory_config.system_prompt)
     extractor = create_extractor(
         llm,
-        tools=[memory_config["function"]],
-        tool_choice=memory_config["function"]["name"],
+        tools=[memory_config.function],
+        tool_choice=memory_config.function["name"],
     )
-    inputs = {
-        "messages": messages,
-    }
-    if existing := state.user_state:
-        inputs["existing"] = {memory_config["function"]["name"]: existing}
+    inputs = {"messages": messages, "existing": existing}
     result = await extractor.ainvoke(inputs, config)
-    return {"responses": result["responses"]}
+    serialized = result["responses"][0].model_dump()
+    # Update the memories for this schema type, (langgraph manages user namespacing)
+    return {"user_states": {state.function_name: serialized}}
 
 
-async def upsert_patched_state(
-    state: schemas.SingleExtractorState, config: RunnableConfig
-) -> dict:
-    """Upsert the user's state to the database."""
-    configurable = configuration.Configuration.from_runnable_config(config)
-    path = constants.PATCH_PATH.format(
-        user_id=configurable.user_id, function_name=state.function_name
-    )
-    serialized = state.responses[0].model_dump_json()
-    embeddings = utils.get_embeddings()
-    vector = await embeddings.aembed_query(serialized)
-    utils.get_index().upsert(
-        vectors=[
-            {
-                "id": path,
-                "values": vector,
-                "metadata": {
-                    constants.PAYLOAD_KEY: serialized,
-                    constants.PATH_KEY: path,
-                    constants.TIMESTAMP_KEY: datetime.now(tz=timezone.utc),
-                    "user_id": configurable.user_id,
-                },
-            }
-        ],
-        namespace=configurable.pinecone_namespace,
-    )
-    return {"user_state": {}}
+# async def extract_semantic_memories(
+#     state: schemas.PatchNodeState, config: RunnableConfig
+# ) -> dict:
+#     """Extract embeddable "events"."""
+#     configurable = configuration.Configuration.from_runnable_config(config)
+#     llm = init_chat_model(model=configurable.model)
+#     memory_config = configurable.schemas[state.function_name]
+#     messages = utils.prepare_messages(state.messages, memory_config.system_prompt)
+
+#     extractor = create_extractor(llm, tools=[memory_config.function])
+#     # We don't have an "existing" value here since we are continuously inserting
+#     # new memories.
+#     result = await extractor.ainvoke({"messages": messages})
+#     return {"responses": result["responses"]}
 
 
-patch_builder = StateGraph(
-    schemas.SingleExtractorState, config_schema=configuration.Configuration
-)
-patch_builder.add_node(fetch_patched_state)
-patch_builder.add_node(extract_patch_memories)
-patch_builder.add_node(upsert_patched_state)
-patch_builder.add_edge(START, "fetch_patched_state")
-patch_builder.add_edge("fetch_patched_state", "extract_patch_memories")
-
-
-def should_commit_patch(
-    state: schemas.SingleExtractorState, config: RunnableConfig
-) -> Literal["upsert_patched_state", "__end__"]:
-    """Whether there are things extracted to commit to the DB."""
-    return "upsert_patched_state" if state.responses else END
-
-
-patch_builder.add_conditional_edges("extract_patch_memories", should_commit_patch)
-patch_graph = patch_builder.compile()
-
-# Handle semantic memory, where we insert each memory event
-# as a new document in the database.
-
-
-async def extract_semantic_memories(
-    state: schemas.SingleExtractorState, config: RunnableConfig
-) -> dict:
-    """Extract embeddable "events"."""
-    configurable = configuration.Configuration.from_runnable_config(config)
-    llm = init_chat_model(model=configurable.model)
-    memory_config = configurable.schemas[state.function_name]
-    messages = utils.prepare_messages(
-        state.messages, memory_config.get("system_prompt") or ""
-    )
-
-    extractor = create_extractor(llm, tools=[memory_config["function"]])
-    # We don't have an "existing" value here since we are continuously inserting
-    # new memories.
-    result = await extractor.ainvoke({"messages": messages})
-    return {"responses": result["responses"]}
-
-
-async def insert_memories(
-    state: schemas.SingleExtractorState, config: RunnableConfig
-) -> dict:
-    """Insert the user's state to the database."""
-    configurable = configuration.Configuration.from_runnable_config(config)
-    embeddings = utils.get_embeddings()
-    serialized = [r.model_dump_json() for r in state.responses]
-    # You could alternatively do multi-vector lookup based on the schema.
-    vectors = await embeddings.aembed_documents(serialized)
-    current_time = datetime.now(tz=timezone.utc)
-    paths = [
-        constants.INSERT_PATH.format(
-            user_id=configurable.user_id,
-            function_name=configurable.function_name,
-            event_id=str(uuid.uuid4()),
-        )
-        for _ in range(len(vectors))
-    ]
-    documents = [
-        {
-            "id": path,
-            "values": vector,
-            "metadata": {
-                constants.PAYLOAD_KEY: serialized,
-                constants.PATH_KEY: path,
-                constants.TIMESTAMP_KEY: current_time,
-                "user_id": configurable.user_id,
-            },
-        }
-        for path, vector, serialized in zip(paths, vectors, serialized)
-    ]
-    utils.get_index().upsert(
-        vectors=documents,
-        namespace=configurable.pinecone_namespace,
-    )
-    return {"user_state": {}}
-
-
-semantic_builder = StateGraph(
-    schemas.SingleExtractorState, config_schema=configuration.GraphConfig
-)
-# Lots of quality improvements can be made here, such as:
-# - Fetch similar memories and prompt model to combine or extrapolate
-# - Adding advanced indexing by the memory schema (like importance, relevance, etc.)
-semantic_builder.add_node(extract_semantic_memories)
-semantic_builder.add_node(insert_memories)
-semantic_builder.add_edge(START, "extract_semantic_memories")
-
-
-def should_insert(
-    state: schemas.SingleExtractorState, config: RunnableConfig
-) -> Literal["insert_memories", "__end__"]:
-    """Whether there are things extracted to commit to the DB."""
-    return "insert_memories" if state.responses else END
-
-
-semantic_builder.add_conditional_edges("extract_semantic_memories", should_insert)
-semantic_graph = semantic_builder.compile()
-
-
-# This graph is public facing. It receives conversations and distibutes them to the
-# memory types as needed.
-
-
-async def schedule(state: schemas.State, config: RunnableConfig) -> dict:
-    """Delay the start of processing to simulate run scheduling.
-
-    We only really need to process a conversation after it is completed.
-    In general, we don't know when a conversation is completed, so we will
-    delay the processing of the conversation for a set amount of time.
-
-    This is configurable at the assistant and run level, and to bypass this,
-    you can set `eager` to True in the run inputs.
-
-    If a new message comes in before the delay is up, the run can be cancelled
-    and a new one scheduled.
-    """
-    if state.get("eager", False):
-        return {"messages": state.messages}
-    configurable = configuration.Configuration.from_runnable_config(config)
-    if configurable.delay:
-        await asyncio.sleep(configurable.delay)
-    return {"messages": []}
+# async def extract_semantic_memories(
+#     state: schemas.PatchNodeState, config: RunnableConfig
+# ) -> dict:
+#     """Extract the user's state from the conversation."""
+#     configurable = configuration.Configuration.from_runnable_config(config)
+#     existing = state.user_states.get(state.function_name)
+#     memory_config = configurable.schemas[state.function_name]
+#     llm = init_chat_model(model=configurable.model)
+#     messages = utils.prepare_messages(state.messages, memory_config.system_prompt)
+#     extractor = create_extractor(
+#         llm,
+#         tools=[memory_config.function],
+#         tool_choice=memory_config.function["name"],
+#     )
+#     inputs = {"messages": messages, "existing": existing}
+#     result = await extractor.ainvoke(inputs, config)
+#     serialized = result["responses"][0].model_dump_json()
+#     # Update the memories for this schema type, (langgraph manages user namespacing)
+#     return {"user_states": {state.function_name: serialized}}
 
 
 # Create the graph + all nodes
-builder = StateGraph(schemas.State, schemas.GraphConfig)
-builder.add_node(schedule)
-builder.add_node("handle_patch_memory", patch_graph)
-builder.add_node("handle_semantic_memory", semantic_graph)
+builder = StateGraph(schemas.State, config_schema=configuration.Configuration)
 
-# Add edges
-builder.add_edge(START, "schedule")
+
+builder.add_node(handle_patch_memory, input=schemas.PatchNodeState)
+builder.add_node("handle_semantic_memory", lambda x: x)
 
 
 def scatter_schemas(state: schemas.State, config: RunnableConfig) -> list[Send]:
@@ -246,20 +94,30 @@ def scatter_schemas(state: schemas.State, config: RunnableConfig) -> list[Send]:
     """
     configurable = configuration.Configuration.from_runnable_config(config)
     sends = []
-    for k, v in configurable["schemas"].items():
-        update_mode = v["update_mode"]
+    current_state = asdict(state)
+    print(f"CURRENT STATE, {current_state}", flush=True)
+    for k, v in configurable.schemas.items():
+        update_mode = v.update_mode
         match update_mode:
             case "patch":
                 target = "handle_patch_memory"
-            case "insert":
-                target = "handle_semantic_memory"
+            # case "insert":
+            #     target = "handle_semantic_memory"
             case _:
                 raise ValueError(f"Unknown update mode: {update_mode}")
-        sends.append(Send(target, {**state, "function_name": k}))
+
+        sends.append(
+            Send(
+                target,
+                schemas.PatchNodeState(
+                    **{"user_states": {}, **current_state, "function_name": k}
+                ),
+            )
+        )
     return sends
 
 
-builder.add_conditional_edges("schedule", scatter_schemas)
+builder.add_conditional_edges("__start__", scatter_schemas)
 
 memgraph = builder.compile()
 

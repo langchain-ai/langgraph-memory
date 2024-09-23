@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from langchain_core.messages import AnyMessage
-from langchain_core.pydantic_v1 import BaseModel
 from langgraph.graph import add_messages
+from langgraph.managed.shared_value import SharedValue
 from typing_extensions import Annotated
 
 
@@ -15,21 +15,28 @@ from typing_extensions import Annotated
 class State:
     """Main graph state."""
 
-    messages: Annotated[List[AnyMessage], add_messages]
+    messages: Annotated[list[AnyMessage], add_messages]
     """The messages in the conversation."""
-    eager: bool
 
 
 @dataclass(kw_only=True)
-class SingleExtractorState(State):
+class PatchNodeState(State):
     """Extractor state."""
 
     function_name: str
-    responses: list[BaseModel]
-    user_state: Optional[Dict[str, Any]]
+    user_states: Annotated[dict[str, dict[str, Any]], SharedValue.on("user_id")]
+
+
+@dataclass(kw_only=True)
+class SemanticNodeState(State):
+    """Extractor state."""
+
+    function_name: str
+    user_states: Annotated[dict[str, dict[str, Any]], SharedValue.on("user_id")]
 
 
 __all__ = [
     "State",
-    "SingleExtractorState",
+    "PatchNodeState",
+    "SemanticNodeState",
 ]

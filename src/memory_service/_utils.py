@@ -11,14 +11,6 @@ from langchain_core.messages import (
     merge_message_runs,
 )
 from langchain_openai import OpenAIEmbeddings
-from pinecone import Pinecone
-
-from memory_service import _configuration as settings
-
-
-def get_index():
-    pc = Pinecone(api_key=settings.SETTINGS.pinecone_api_key)
-    return pc.Index(settings.SETTINGS.pinecone_index_name)
 
 
 def prepare_messages(
