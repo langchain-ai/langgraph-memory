@@ -14,10 +14,10 @@ from langgraph.graph import END, START, StateGraph
 from trustcall import create_extractor
 from typing_extensions import Literal
 
+from memory_service import _configuration as configuration
 from memory_service import _constants as constants
-from memory_service import _schemas as schemas
-from memory_service import _configuration as settings
 from memory_service import _utils as utils
+from memory_service import state as schemas
 
 logger = logging.getLogger("memory")
 # Handle patch memory, where we update a single document in the database.
@@ -33,13 +33,13 @@ async def fetch_patched_state(
     This is a placeholder function. You should replace this with a function
     that fetches the user's state from the database.
     """
-    configurable = utils.ensure_configurable(config["configurable"])
+    configurable = configuration.Configuration.from_runnable_config(config)
     path = constants.PATCH_PATH.format(
-        user_id=configurable["user_id"], function_name=state["function_name"]
+        user_id=configurable.user_id, function_name=state.function_name
     )
     # TODO: does pinecone have an async api in their SDK...?
     response = utils.get_index().fetch(
-        ids=[path], namespace=settings.SETTINGS.pinecone_namespace
+        ids=[path], namespace=configurable.pinecone_namespace
     )
     if vectors := response.get("vectors"):
         document = vectors[path]
@@ -52,12 +52,12 @@ async def extract_patch_memories(
     state: schemas.SingleExtractorState, config: RunnableConfig
 ) -> dict:
     """Extract the user's state from the conversation."""
-    configurable = utils.ensure_configurable(config["configurable"])
-    schemas = configurable["schemas"]
-    memory_config = schemas[state["function_name"]]
-    llm = init_chat_model(model=configurable["model"])
+    configurable = configuration.Configuration.from_runnable_config(config)
+    schemas = configurable.schemas
+    memory_config = schemas[state.function_name]
+    llm = init_chat_model(model=configurable.model)
     messages = utils.prepare_messages(
-        state["messages"], memory_config.get("system_prompt") or ""
+        state.messages, memory_config.get("system_prompt") or ""
     )
     extractor = create_extractor(
         llm,
@@ -67,7 +67,7 @@ async def extract_patch_memories(
     inputs = {
         "messages": messages,
     }
-    if existing := state["user_state"]:
+    if existing := state.user_state:
         inputs["existing"] = {memory_config["function"]["name"]: existing}
     result = await extractor.ainvoke(inputs, config)
     return {"responses": result["responses"]}
@@ -77,11 +77,11 @@ async def upsert_patched_state(
     state: schemas.SingleExtractorState, config: RunnableConfig
 ) -> dict:
     """Upsert the user's state to the database."""
-    configurable = utils.ensure_configurable(config["configurable"])
+    configurable = configuration.Configuration.from_runnable_config(config)
     path = constants.PATCH_PATH.format(
-        user_id=configurable["user_id"], function_name=state["function_name"]
+        user_id=configurable.user_id, function_name=state.function_name
     )
-    serialized = state["responses"][0].model_dump_json()
+    serialized = state.responses[0].model_dump_json()
     embeddings = utils.get_embeddings()
     vector = await embeddings.aembed_query(serialized)
     utils.get_index().upsert(
@@ -93,16 +93,18 @@ async def upsert_patched_state(
                     constants.PAYLOAD_KEY: serialized,
                     constants.PATH_KEY: path,
                     constants.TIMESTAMP_KEY: datetime.now(tz=timezone.utc),
-                    "user_id": configurable["user_id"],
+                    "user_id": configurable.user_id,
                 },
             }
         ],
-        namespace=settings.SETTINGS.pinecone_namespace,
+        namespace=configurable.pinecone_namespace,
     )
     return {"user_state": {}}
 
 
-patch_builder = StateGraph(schemas.SingleExtractorState, schemas.GraphConfig)
+patch_builder = StateGraph(
+    schemas.SingleExtractorState, config_schema=configuration.Configuration
+)
 patch_builder.add_node(fetch_patched_state)
 patch_builder.add_node(extract_patch_memories)
 patch_builder.add_node(upsert_patched_state)
@@ -114,7 +116,7 @@ def should_commit_patch(
     state: schemas.SingleExtractorState, config: RunnableConfig
 ) -> Literal["upsert_patched_state", "__end__"]:
     """Whether there are things extracted to commit to the DB."""
-    return "upsert_patched_state" if state["responses"] else END
+    return "upsert_patched_state" if state.responses else END
 
 
 patch_builder.add_conditional_edges("extract_patch_memories", should_commit_patch)
@@ -128,11 +130,11 @@ async def extract_semantic_memories(
     state: schemas.SingleExtractorState, config: RunnableConfig
 ) -> dict:
     """Extract embeddable "events"."""
-    configurable = utils.ensure_configurable(config["configurable"])
-    llm = init_chat_model(model=configurable["model"])
-    memory_config = configurable["schemas"][state["function_name"]]
+    configurable = configuration.Configuration.from_runnable_config(config)
+    llm = init_chat_model(model=configurable.model)
+    memory_config = configurable.schemas[state.function_name]
     messages = utils.prepare_messages(
-        state["messages"], memory_config.get("system_prompt") or ""
+        state.messages, memory_config.get("system_prompt") or ""
     )
 
     extractor = create_extractor(llm, tools=[memory_config["function"]])
@@ -146,16 +148,16 @@ async def insert_memories(
     state: schemas.SingleExtractorState, config: RunnableConfig
 ) -> dict:
     """Insert the user's state to the database."""
-    configurable = utils.ensure_configurable(config["configurable"])
+    configurable = configuration.Configuration.from_runnable_config(config)
     embeddings = utils.get_embeddings()
-    serialized = [r.model_dump_json() for r in state["responses"]]
+    serialized = [r.model_dump_json() for r in state.responses]
     # You could alternatively do multi-vector lookup based on the schema.
     vectors = await embeddings.aembed_documents(serialized)
     current_time = datetime.now(tz=timezone.utc)
     paths = [
         constants.INSERT_PATH.format(
-            user_id=configurable["user_id"],
-            function_name=state["function_name"],
+            user_id=configurable.user_id,
+            function_name=configurable.function_name,
             event_id=str(uuid.uuid4()),
         )
         for _ in range(len(vectors))
@@ -168,19 +170,21 @@ async def insert_memories(
                 constants.PAYLOAD_KEY: serialized,
                 constants.PATH_KEY: path,
                 constants.TIMESTAMP_KEY: current_time,
-                "user_id": configurable["user_id"],
+                "user_id": configurable.user_id,
             },
         }
         for path, vector, serialized in zip(paths, vectors, serialized)
     ]
     utils.get_index().upsert(
         vectors=documents,
-        namespace=settings.SETTINGS.pinecone_namespace,
+        namespace=configurable.pinecone_namespace,
     )
     return {"user_state": {}}
 
 
-semantic_builder = StateGraph(schemas.SingleExtractorState, schemas.GraphConfig)
+semantic_builder = StateGraph(
+    schemas.SingleExtractorState, config_schema=configuration.GraphConfig
+)
 # Lots of quality improvements can be made here, such as:
 # - Fetch similar memories and prompt model to combine or extrapolate
 # - Adding advanced indexing by the memory schema (like importance, relevance, etc.)
@@ -193,7 +197,7 @@ def should_insert(
     state: schemas.SingleExtractorState, config: RunnableConfig
 ) -> Literal["insert_memories", "__end__"]:
     """Whether there are things extracted to commit to the DB."""
-    return "insert_memories" if state["responses"] else END
+    return "insert_memories" if state.responses else END
 
 
 semantic_builder.add_conditional_edges("extract_semantic_memories", should_insert)
@@ -218,10 +222,10 @@ async def schedule(state: schemas.State, config: RunnableConfig) -> dict:
     and a new one scheduled.
     """
     if state.get("eager", False):
-        return {"messages": state["messages"]}
-    configurable = utils.ensure_configurable(config["configurable"])
-    if configurable["delay"]:
-        await asyncio.sleep(configurable["delay"])
+        return {"messages": state.messages}
+    configurable = configuration.Configuration.from_runnable_config(config)
+    if configurable.delay:
+        await asyncio.sleep(configurable.delay)
     return {"messages": []}
 
 
@@ -240,9 +244,9 @@ def scatter_schemas(state: schemas.State, config: RunnableConfig) -> list[Send]:
 
     These will be executed in parallel.
     """
-    configuration = utils.ensure_configurable(config["configurable"])
+    configurable = configuration.Configuration.from_runnable_config(config)
     sends = []
-    for k, v in configuration["schemas"].items():
+    for k, v in configurable["schemas"].items():
         update_mode = v["update_mode"]
         match update_mode:
             case "patch":

@@ -1,7 +1,7 @@
 {
   "dependencies": ["."],
   "graphs": {
-    "memory": "./memory_service/graph.py:memgraph"
+    "memory": "./src/memory_service/graph.py:memgraph"
   },
   "env": ".env"
 }

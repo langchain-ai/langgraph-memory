@@ -9,13 +9,12 @@ from langchain.chat_models import init_chat_model
 from langchain_core.messages import AnyMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableConfig
-from langchain_core.tools import tool
 from langgraph.graph import START, StateGraph, add_messages
 from langgraph_sdk import get_client
 from typing_extensions import Annotated, TypedDict
 
-from memory_service import _constants as constants
 from memory_service import _configuration as settings
+from memory_service import _constants as constants
 from memory_service import _utils as utils
 
 
