@@ -15,7 +15,7 @@ from langgraph_sdk import get_client
 from typing_extensions import Annotated, TypedDict
 
 from memory_service import _constants as constants
-from memory_service import _settings as settings
+from memory_service import _configuration as settings
 from memory_service import _utils as utils
 
 

@@ -16,7 +16,7 @@ from typing_extensions import Literal
 
 from memory_service import _constants as constants
 from memory_service import _schemas as schemas
-from memory_service import _settings as settings
+from memory_service import _configuration as settings
 from memory_service import _utils as utils
 
 logger = logging.getLogger("memory")

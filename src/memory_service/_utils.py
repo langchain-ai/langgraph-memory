@@ -14,7 +14,7 @@ from langchain_fireworks import FireworksEmbeddings
 from pinecone import Pinecone
 
 from memory_service import _schemas as schemas
-from memory_service import _settings as settings
+from memory_service import _configuration as settings
 
 _DEFAULT_DELAY = 60  # seconds
 
