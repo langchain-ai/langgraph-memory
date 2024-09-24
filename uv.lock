@@ -5,8 +5,10 @@ resolution-markers = [
     "python_full_version < '3.12'",
     "python_full_version >= '3.12' and python_full_version < '3.12.4'",
     "python_full_version < '3.12'",
-    "python_full_version < '3.12.4'",
-    "python_full_version >= '3.12.4'",
+    "python_full_version < '3.12'",
+    "python_full_version >= '3.12' and python_full_version < '3.12.4'",
+    "python_full_version < '3.13'",
+    "python_full_version >= '3.13'",
     "python_full_version >= '3.13'",
 ]
 
@@ -688,15 +690,15 @@ wheels = [
 
 [[package]]
 name = "langgraph"
-version = "0.2.25"
+version = "0.2.26"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "langchain-core" },
     { name = "langgraph-checkpoint" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5c/cf/b071ad5c64a98aefcfa34f9ada6483ea3ed62e86e365c1949dec2bbb8c20/langgraph-0.2.25.tar.gz", hash = "sha256:86e1d8e0eba38dac3334cd7ce87b1a13b669574e3fa17c0acc3f71c26d338586", size = 88889 }
+sdist = { url = "https://files.pythonhosted.org/packages/fe/bf/e6427449b896fe891ddf0bd9f99c8ccd06f6c787a77d6c665060b535283e/langgraph-0.2.26.tar.gz", hash = "sha256:f805d19ff8b726a127c4e5dcda6026753478003e5c15904121e60d8a9fd2eee6", size = 88912 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8d/72/fceae0bc0d42cea55c4cc4872b0610558eb7de4e4a438e8fb28d3ef09207/langgraph-0.2.25-py3-none-any.whl", hash = "sha256:4133ca873ccefd35bed3aa71cec51f54f75e67385944e78e42216a99fa014e6b", size = 107531 },
+    { url = "https://files.pythonhosted.org/packages/8d/bd/d87f35a093e38d327f991b50db6ce2c2aad250ed63d24647027f750fbce5/langgraph-0.2.26-py3-none-any.whl", hash = "sha256:e7c85ab742c5af603288ee216ff81c390e98be518b37a083137ee86adac082b9", size = 107565 },
 ]
 
 [[package]]
@@ -782,7 +784,7 @@ requires-dist = [
     { name = "langchain-anthropic", specifier = ">=0.2.1" },
     { name = "langchain-core", specifier = ">=0.3.5,<0.4.0" },
     { name = "langchain-openai", specifier = ">=0.2.0" },
-    { name = "langgraph", specifier = ">=0.1.0" },
+    { name = "langgraph", specifier = ">=0.2.26" },
     { name = "langgraph-cli", marker = "extra == 'dev'", specifier = ">=0.1.43" },
     { name = "langgraph-sdk", specifier = ">=0.1.31" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.10.0" },
