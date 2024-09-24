@@ -17,6 +17,8 @@ class State:
 
     messages: Annotated[list[AnyMessage], add_messages]
     """The messages in the conversation."""
+    user_states: Annotated[dict[str, dict[str, Any]], SharedValue.on("user_id")]
+    events: Annotated[dict[str, dict[str, Any]], SharedValue.on("user_id")]
 
 
 @dataclass(kw_only=True)
@@ -28,11 +30,10 @@ class PatchNodeState(State):
 
 
 @dataclass(kw_only=True)
-class SemanticNodeState(State):
+class SemanticNodeState(PatchNodeState):
     """Extractor state."""
 
-    function_name: str
-    user_states: Annotated[dict[str, dict[str, Any]], SharedValue.on("user_id")]
+    events: Annotated[dict[str, dict[str, Any]], SharedValue.on("user_id")]
 
 
 __all__ = [

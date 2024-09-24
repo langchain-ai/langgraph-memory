@@ -1,6 +1,7 @@
 """Example chatbot that incorporates user memories."""
 
 import os
+import uuid
 from dataclasses import dataclass, fields
 from datetime import datetime, timezone
 from typing import Any, List
@@ -30,7 +31,7 @@ class ChatConfigurable:
 
     user_id: str
     thread_id: str
-    model: str = "gpt-4o"
+    model: str = "claude-3-5-sonnet-20240620"
     delay_seconds: int = 60  # For debouncing memory creation
     mem_assistant_id: str = "memory"  # Default to just the graph ID
     memory_service_url: str | None = None
@@ -95,9 +96,8 @@ async def bot(state: ChatState, config: RunnableConfig) -> ChatState:
     )
 
     langgraph_client = get_client(url=configurable.memory_service_url)
-    thread_id = config["configurable"]["thread_id"]
     await langgraph_client.runs.create(
-        thread_id,
+        None,
         assistant_id=configurable.mem_assistant_id,
         input={
             "messages": state.messages,  # the service dedupes messages

@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langsmith import expect, get_current_run_tree, test
+
 from memory_service._configuration import Configuration
 from memory_service._constants import PATCH_PATH
 from memory_service.graph import memgraph
