@@ -9,7 +9,7 @@ readme = "README.md"
 requires-python = ">=3.9.0,<3.13"
 dependencies = [
     "langgraph>=0.2.26",
-    "trustcall>=0.0.18",
+    "trustcall>=0.0.20",
     "langchain>=0.3.0",
     "langchain-core>=0.3.5,<0.4.0",
     "langchain-openai>=0.2.0",

@@ -41,7 +41,7 @@ class Configuration:
     
     Default is 60 seconds.
     """
-    model: str = "claude-3-5-sonnet-20240620"
+    model: str = "gpt-4o" # "claude-3-5-sonnet-20240620"
     """The model to use for generating memories. """
     schemas: dict = field(default_factory=dict)
     """The schemas for the memory assistant."""
