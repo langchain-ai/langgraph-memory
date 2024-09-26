@@ -4,14 +4,14 @@ from typing import Literal, Optional
 
 import langsmith as ls
 from langgraph.store.memory import MemoryStore
-from langgraph.store.store import Store
+from langgraph.store.base import BaseStore
 from pydantic import BaseModel, Field
 
 from memory_service.graph import builder
 
 
 class User(BaseModel):
-    """Store all important information about a user here."""
+    """BaseStore all important information about a user here."""
 
     preferred_name: Optional[str] = None
     current_age: Optional[str] = None
@@ -28,7 +28,7 @@ class User(BaseModel):
         description="Other preferences the user has expressed that informs how you should interact with them."
     )
     relationships: list[str] = Field(
-        description="Store information about friends, family members, coworkers, and other important relationships the user has here. Include relevant information about htem."
+        description="BaseStore information about friends, family members, coworkers, and other important relationships the user has here. Include relevant information about htem."
     )
 
 
@@ -69,8 +69,7 @@ async def test_patch_memory_stored():
         {"messages": [("user", "My name is Bob. I like fun things")]}, config
     )
     namespace = ("user_states", user_id, "User")
-    store = Store(mem_store)
-    memories = store.search(namespace, query=None, filter=None, weights=None)
+    memories = mem_store.search(namespace, query=None, filter=None, weights=None)
     ls.expect(len(memories)).to_equal(1)
     mem = memories[0]
     ls.expect(mem.value.get("preferred_name")).to_equal("Bob")
@@ -83,14 +82,14 @@ async def test_patch_memory_stored():
         },
         config,
     )
-    memories = store.search(namespace, query=None, filter=None, weights=None)
+    memories = mem_store.search(namespace, query=None, filter=None, weights=None)
     ls.expect(len(memories)).to_equal(1)
     mem = memories[0]
     ls.expect(mem.value.get("preferred_name")).to_equal("Robert")
 
     # Check that searching by a different namespace returns no memories
     bad_namespace = ("user_states", "my-bad-test-user", "User")
-    memories = store.search(bad_namespace, query=None, filter=None, weights=None)
+    memories = mem_store.search(bad_namespace, query=None, filter=None, weights=None)
     ls.expect(memories).against(lambda x: not x)
 
 
@@ -167,8 +166,7 @@ async def test_insertion_memory_stored():
         {**config, "thread_id": thread_id},
     )
     namespace = ("events", user_id, "Relationship")
-    store = Store(mem_store)
-    memories = store.search(namespace, query=None, filter=None, weights=None)
+    memories = mem_store.search(namespace, query=None, filter=None, weights=None)
     ls.expect(len(memories)).to_be_greater_than(1)
     # Check for Joanne's relationship
     joanne_relationship = next(
@@ -210,7 +208,9 @@ async def test_insertion_memory_stored():
     )
 
     # Check the memories again
-    updated_memories = store.search(namespace, query=None, filter=None, weights=None)
+    updated_memories = mem_store.search(
+        namespace, query=None, filter=None, weights=None
+    )
     ls.expect(len(updated_memories)).to_equal(
         3
     )  # Now there should be 3 objects: Nick, Joanne, and Anthony

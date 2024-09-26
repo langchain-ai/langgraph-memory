@@ -12,12 +12,11 @@ from langchain.chat_models import init_chat_model
 from langchain_core.runnables import RunnableConfig
 from langgraph.constants import Send
 from langgraph.graph import StateGraph
-from langgraph.store.store import Store
-from trustcall import create_extractor
-
+from langgraph.store.base import BaseStore
 from memory_service import _configuration as configuration
 from memory_service import _utils as utils
 from memory_service import state as schemas
+from trustcall import create_extractor
 
 logger = logging.getLogger("memory")
 
@@ -36,7 +35,7 @@ async def _extract_memory(
 
 
 async def handle_patch_memory(
-    state: schemas.ProcessorState, config: RunnableConfig, *, store: Store
+    state: schemas.ProcessorState, config: RunnableConfig, *, store: BaseStore
 ) -> dict:
     """Extract the user's state from the conversation and update the memory."""
     configurable = configuration.Configuration.from_runnable_config(config)
@@ -59,7 +58,7 @@ async def handle_patch_memory(
 
 
 async def handle_insertion_memory(
-    state: schemas.ProcessorState, config: RunnableConfig, *, store: Store
+    state: schemas.ProcessorState, config: RunnableConfig, *, store: BaseStore
 ) -> dict:
     """Upsert memory events."""
     configurable = configuration.Configuration.from_runnable_config(config)
