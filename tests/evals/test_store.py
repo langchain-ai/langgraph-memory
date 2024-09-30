@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Literal, Optional
 
 import langsmith as ls
-from langgraph.store.memory import MemoryStore
+from langgraph.store.memory import InMemoryStore
 from langgraph.store.base import BaseStore
 from pydantic import BaseModel, Field
 
@@ -55,7 +55,7 @@ def create_memory_function(
 
 @ls.unit
 async def test_patch_memory_stored():
-    mem_store = MemoryStore()
+    mem_store = InMemoryStore()
     mem_func = create_memory_function(User)
     graph = builder.compile(store=mem_store)
     thread_id = str(uuid.uuid4())
@@ -69,7 +69,7 @@ async def test_patch_memory_stored():
         {"messages": [("user", "My name is Bob. I like fun things")]}, config
     )
     namespace = ("user_states", user_id, "User")
-    memories = mem_store.search(namespace, query=None, filter=None, weights=None)
+    memories = mem_store.search(namespace)
     ls.expect(len(memories)).to_equal(1)
     mem = memories[0]
     ls.expect(mem.value.get("preferred_name")).to_equal("Bob")
@@ -82,14 +82,14 @@ async def test_patch_memory_stored():
         },
         config,
     )
-    memories = mem_store.search(namespace, query=None, filter=None, weights=None)
+    memories = mem_store.search(namespace)
     ls.expect(len(memories)).to_equal(1)
     mem = memories[0]
     ls.expect(mem.value.get("preferred_name")).to_equal("Robert")
 
     # Check that searching by a different namespace returns no memories
     bad_namespace = ("user_states", "my-bad-test-user", "User")
-    memories = mem_store.search(bad_namespace, query=None, filter=None, weights=None)
+    memories = mem_store.search(bad_namespace)
     ls.expect(memories).against(lambda x: not x)
 
 
@@ -117,7 +117,7 @@ class Relationship(BaseModel):
 
 @ls.unit
 async def test_insertion_memory_stored():
-    mem_store = MemoryStore()
+    mem_store = InMemoryStore()
     mem_func = create_memory_function(
         Relationship,
         custom_instructions="Extract all relationships mentioned. Call Relationship once per-relationship.",
@@ -166,7 +166,7 @@ async def test_insertion_memory_stored():
         {**config, "thread_id": thread_id},
     )
     namespace = ("events", user_id, "Relationship")
-    memories = mem_store.search(namespace, query=None, filter=None, weights=None)
+    memories = mem_store.search(namespace)
     ls.expect(len(memories)).to_be_greater_than(1)
     # Check for Joanne's relationship
     joanne_relationship = next(
@@ -209,7 +209,7 @@ async def test_insertion_memory_stored():
 
     # Check the memories again
     updated_memories = mem_store.search(
-        namespace, query=None, filter=None, weights=None
+        namespace, 
     )
     ls.expect(len(updated_memories)).to_equal(
         3

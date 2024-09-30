@@ -42,7 +42,7 @@ async def handle_patch_memory(
     namespace = ("user_states", configurable.user_id, state.function_name)
     doc_id = uuid.uuid5(uuid.NAMESPACE_URL, "/".join(namespace))
     existing_item = await store.aget(namespace, str(doc_id))
-    existing = {existing_item.id: existing_item.value} if existing_item else None
+    existing = {existing_item.key: existing_item.value} if existing_item else None
     memory_config = configurable.schemas[state.function_name]
     extractor = create_extractor(
         init_chat_model(model=configurable.model),
@@ -63,9 +63,7 @@ async def handle_insertion_memory(
     """Upsert memory events."""
     configurable = configuration.Configuration.from_runnable_config(config)
     namespace = ("events", configurable.user_id, state.function_name)
-    existing_items = await store.asearch(
-        namespace, filter=None, query=None, weights=None, limit=5
-    )
+    existing_items = await store.asearch(namespace, limit=5)
     memory_config: configuration.MemoryConfig = configurable.schemas[
         state.function_name
     ]
@@ -82,7 +80,7 @@ async def handle_insertion_memory(
             ),
             "existing": (
                 [
-                    (existing_item.id, state.function_name, existing_item.value)
+                    (existing_item.key, state.function_name, existing_item.value)
                     for existing_item in existing_items
                 ]
                 if existing_items

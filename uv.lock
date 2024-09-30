@@ -7,7 +7,9 @@ resolution-markers = [
     "python_full_version < '3.12'",
     "python_full_version < '3.12'",
     "python_full_version >= '3.12' and python_full_version < '3.12.4'",
-    "python_full_version < '3.13'",
+    "python_full_version < '3.12'",
+    "python_full_version < '3.12.4'",
+    "python_full_version >= '3.12.4'",
     "python_full_version >= '3.13'",
     "python_full_version >= '3.13'",
 ]
@@ -280,14 +282,14 @@ wheels = [
 
 [[package]]
 name = "dydantic"
-version = "0.0.6"
+version = "0.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4e/3d/29bbd2cc0812b256d0eed89b04f83d5829921c18bdb634a614c0f09e1fab/dydantic-0.0.6.tar.gz", hash = "sha256:6cb56888390aa84b48f7cf8dacc08513a643455f2b21497291aecc2aa6c18699", size = 8098 }
+sdist = { url = "https://files.pythonhosted.org/packages/49/29/df1a474a102c48adb40b5365c6b28632677c455b958382119b3b11d3906e/dydantic-0.0.7.tar.gz", hash = "sha256:6430f038fd32b72782722ef1ddf39837ba251fbf7a183ced3e1597fac4e4862e", size = 8112 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1c/f4/ea7770a20c374aaeb80a831dad29410908b3ff272f7f06915b5dcf28fccf/dydantic-0.0.6-py3-none-any.whl", hash = "sha256:800658e594d8f89503ef935cb84a9ed0bcaae63ff3efaf074d78a591fe33b736", size = 8627 },
+    { url = "https://files.pythonhosted.org/packages/62/d9/6d1d8956e5356c77cc37c815b9c3156939ce07ac3218dde047fbce67194f/dydantic-0.0.7-py3-none-any.whl", hash = "sha256:5531220d876b77451bb045155f83534c69d13bf76d4d628dcaa920d933a7ae89", size = 8634 },
 ]
 
 [[package]]
@@ -690,28 +692,28 @@ wheels = [
 
 [[package]]
 name = "langgraph"
-version = "0.2.26"
+version = "0.2.29"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "langchain-core" },
     { name = "langgraph-checkpoint" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fe/bf/e6427449b896fe891ddf0bd9f99c8ccd06f6c787a77d6c665060b535283e/langgraph-0.2.26.tar.gz", hash = "sha256:f805d19ff8b726a127c4e5dcda6026753478003e5c15904121e60d8a9fd2eee6", size = 88912 }
+sdist = { url = "https://files.pythonhosted.org/packages/6e/cb/8c1782f85d8bb59ce3c9000665de495a7aa752216297c9f52bb04aee5f1c/langgraph-0.2.29.tar.gz", hash = "sha256:b8f1cd3f531224f3cb83d7ec414e560f08b0696d8c78402ad0fb741645371958", size = 88795 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8d/bd/d87f35a093e38d327f991b50db6ce2c2aad250ed63d24647027f750fbce5/langgraph-0.2.26-py3-none-any.whl", hash = "sha256:e7c85ab742c5af603288ee216ff81c390e98be518b37a083137ee86adac082b9", size = 107565 },
+    { url = "https://files.pythonhosted.org/packages/d9/2b/c83ddc0f92de1012bbcf4af500d71acb7f5d3c0ebcd43095e7ac4335d083/langgraph-0.2.29-py3-none-any.whl", hash = "sha256:0b74b352da0a1f70bcf7bb6d17d590957ae7e68ef78a52b5be271d9dc09b4cd2", size = 106545 },
 ]
 
 [[package]]
 name = "langgraph-checkpoint"
-version = "1.0.10"
+version = "1.0.13"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "langchain-core" },
     { name = "msgpack" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4a/ca/55ddff402871d96cb9ec4f6bc0eb497bb6953f69538498f8cdea7066f35d/langgraph_checkpoint-1.0.10.tar.gz", hash = "sha256:f800f6d340a5301f4f0d3c17f1ec87b778ebe2c7a20c9ea5caf3d2eb0c6b464d", size = 15622 }
+sdist = { url = "https://files.pythonhosted.org/packages/5f/ed/49fabceb79e868a0f187585cd5f3516b748503f5ed017dbfa322bac3cc68/langgraph_checkpoint-1.0.13.tar.gz", hash = "sha256:eae75315b0a6df8d8488258a6d739ac3051c20966f4793eadfc0131281db2558", size = 20120 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/48/70/6ed6129c82f15dd76cf6cb5c9ffc496c0b9949a46d84813c8fae412656c2/langgraph_checkpoint-1.0.10-py3-none-any.whl", hash = "sha256:3396734143fda0165964e4f0b73b39e77fbea9f13cb4da1ed16a5c41fc136e50", size = 17016 },
+    { url = "https://files.pythonhosted.org/packages/bf/d8/1f438c8cac641432f874e71bb8cb436beb07cf6d5b03a10edce223b0ba35/langgraph_checkpoint-1.0.13-py3-none-any.whl", hash = "sha256:76e5c8aa67db762a493a63f73575f9bc46cbf6d746a38c4970f8afe51c5017be", size = 22648 },
 ]
 
 [[package]]
@@ -784,14 +786,14 @@ requires-dist = [
     { name = "langchain-anthropic", specifier = ">=0.2.1" },
     { name = "langchain-core", specifier = ">=0.3.5,<0.4.0" },
     { name = "langchain-openai", specifier = ">=0.2.0" },
-    { name = "langgraph", specifier = ">=0.2.26" },
+    { name = "langgraph", specifier = ">=0.2.29" },
     { name = "langgraph-cli", marker = "extra == 'dev'", specifier = ">=0.1.43" },
     { name = "langgraph-sdk", specifier = ">=0.1.31" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.10.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.2.2" },
     { name = "pytest-asyncio", marker = "extra == 'dev'" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.4.10" },
-    { name = "trustcall", specifier = ">=0.0.18" },
+    { name = "trustcall", specifier = ">=0.0.20" },
 ]
 
 [[package]]
@@ -1628,16 +1630,16 @@ wheels = [
 
 [[package]]
 name = "trustcall"
-version = "0.0.18"
+version = "0.0.20"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dydantic" },
     { name = "jsonpatch" },
     { name = "langgraph" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a4/0f/8e5a479735296172155395ce0d4ec469e9ffc407fb1141fdee2e7cc76276/trustcall-0.0.18.tar.gz", hash = "sha256:9168c8ef509eae61ecd80ec82aa5d93cc5eb087bbaec5b7beb455c8fd2a7ee6e", size = 16968 }
+sdist = { url = "https://files.pythonhosted.org/packages/56/93/4eab251c09472a66858694bc96996650a850338b77d8461cdf1301ad983c/trustcall-0.0.20.tar.gz", hash = "sha256:143ed1880c6392f9a783e77f317fe85fddd7718d7d12721cba27238a183a815b", size = 17111 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/50/ee/e681166f33db64639a738d2708756cfa6aefb3ff16915f699ed3fc56dce6/trustcall-0.0.18-py3-none-any.whl", hash = "sha256:47c0ecca52764f48ea490f226ba665220f0741c98157e6f4046488c9b18da4e3", size = 15370 },
+    { url = "https://files.pythonhosted.org/packages/3b/7f/852fdf6e55888192fe02fc7c39d95d35e7fb7c76fb2ef67c617d4b3775fb/trustcall-0.0.20-py3-none-any.whl", hash = "sha256:1050e13ec7911241047f45b66eff21ab07d88db1295a625b0c498ac6f0ccbbcf", size = 15520 },
 ]
 
 [[package]]
