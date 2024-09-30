@@ -1,0 +1,1521 @@
+interactions:
+- request:
+    body: '{"model": "accounts/fireworks/models/firefunction-v2", "stream": false,
+      "messages": [{"role": "system", "content": "You may add or remove memories that
+      are core to the user''s identity or that will help you better interact with
+      the user.\n\n<memory-system>Reflect on following interaction. Use the provided
+      tools to  retain any necessary memories about the user.</memory-system>\n"},
+      {"role": "user", "content": "## End of conversation\n\n<memory-system>Reflect
+      on the interaction above. What memories ought to be retained or updated?</memory-system>"}],
+      "n": 1, "temperature": 0.0, "stop": null, "tools": [{"type": "function", "function":
+      {"name": "core_memories", "description": "A list of core memories about the
+      user.", "parameters": {"description": "A list of core memories about the user.",
+      "properties": {"memories": {"items": {"type": "string"}, "title": "Memories",
+      "type": "array"}}, "required": ["memories"], "title": "core_memories", "type":
+      "object"}}}], "tool_choice": {"type": "function", "function": {"name": "core_memories"}}}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/chat/completions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAwAAAP//XJDLTsMwFER/Bc3aoU2TJql3wIINsKkQi7aKXOemNY3tYju8ovw7MqgU
+        sbPmyEczd4BqwFGUi/lUtkVS5NsmyQuZJZWYpslCltSmKeVVJsFgt88kAzjkXoRLafWxo6CsAYN0
+        JAI14GmZLqo0y7OMQduGOnAIKW1vgp+0ytGbdQc/+UY/QdsbGS3J6yyK9lZJ8uCrAco09A4+ZdDk
+        vdgR+ABnO4pO75UPwgQwBGu7Woqu+//te1wE9e1jcf10tWyk3bub5efDi9btXXsfq4ePYxSeaoCd
+        n3yAETpSaR3VmrR1ijwYhNv1mkzw4BjWOJE1+MVqM2IcNyNDq4zy+9qR8FH2t+e4YehPk47O6mOo
+        gz2Q8eD5vIybgujOUVkxnA/+m8/ScfwCAAD//wMAL8E9g8QBAAA=
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c42840e831fa9e-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:57:12 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google
+      fireworks-server-processing-time:
+      - '0.252'
+      x-request-id:
+      - 886661d0-58f3-4199-b25a-d1e07ef7a91e
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["{\"memories\":[]}"], "model": "nomic-ai/nomic-embed-text-v1.5",
+      "encoding_format": "base64"}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/embeddings
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA2xXy47cRgz8lz3biyJZfPlXfHJgI/AhPuUQwD8ftDQjsWetmxotNrtYVaR+v33/
+        9u+3ty9ff7/9/PX9x39vX/Dp7cc/f/34/v3nr7/fvnzFO8Lc0jvDQ/0T3gGmEdaGCGItfsa7ZCNT
+        WLQ8FpCpaKae360VqIS2mbED/dxnhfLrDe4dEqiqSKk8TpS07Awk9Vg6PkO2qoVpyTO+dwnp9lzQ
+        cqnISM9jE97R2h5O7XjENii1pVufp2latWvYI4EVSSDOVIrKyLw7a22/7qy1X8Y6Bd3l5nLBoOy2
+        6nhgtSAu7TLra0Eiu1uvxI/PRKAN388bVThSF4No9IkB3gUi5urWzy3uLLQnHjugLkCigAskEYr5
+        RDukvMWelzvSQapV3mche8F0VbugIWpgXDVL0hFlVxRprRyQwm2+mpqUiOt9ZZQ9Mz1eQ1S9WkQe
+        TFh3lICrcrLMYZS8yo4omkdU88pfdD29yvakNRYJNDiKJame0RgcolfkxiEJd8+KkZRYSDFarW7K
+        mvo6FrMcKCf7xt5hziupI3clw5tXqLWYKSmmPuHVKhvQrGjspMUT0RU+EKN066uOLOOl3VVaElLu
+        vPDLMFO0Lo35xS0XYT5xP2DfMk8aUYpLoSKEN1k6pR1Jk5vV7K7MfuAt7+Kw6CAlHNY/PuMRrAhF
+        b+ZCOo2D7uK5irOpKGKyZ+GbvXiRdgr3MI4IqYmbwpT5rNxJXsKpgak3SarvrF7UaQkrGaUCoqUa
+        V3Y8XbSyw2pYkWZkk2Y+yK0cTrRWZHkmAnfFpNqFElOi6R4trmWjJkAEKM3ggzoP//ngJdHW0YMm
+        AlTAN3vJjraA3TSBIDNcOtOH1O5U/+Acliqv0tm8YaXDplysMSHUK+s+gaoRNdkARIqNVqPavGW8
+        X/DkympsCR8eRGnbEjl4XmTv9GhXGaa/1DIN3jILGXLlEoIO6ftKKuXwmoVnCPVubyC1KkaZztJV
+        eJH7RT6wyIrWG4SMBcHYI0tyrwaFAEPbJSa5JLpLt5YgCNqrxwPqod2d6odF57HcJjZ75G3np6gE
+        mhtttU3TWn02hzYX6dBBApSGhlHzlouTufcyVVFXDjC8uPIf4wXM3bWzRnM/wOloKMMPpzuXRXoY
+        6JGvMw7Jj4gGC3Zj9Dunt+9zlCI7cyOqBFk9nddVc/jaAX92cp9FbLWI2AGS8ArDVaRjQEl1v5s/
+        csnGQyE3XRmz+xyRlEkENs5Ks5y5TW4hhpfZzeRVHzTESnhzOb36wrlFXzvMZkZ/JKAaEb11IIGg
+        mrc/HXdGfiCOaiR92qwVS2NTgi6DLTGOGfpDsLNAzjHmntJya92P8JSX5k/xdnqNCTJTnM7R1v/Q
+        E6wTZvG0mLOJvuLTXuoypPFxYPzDoL1mURiVSL0bhGpUl2yeQin0VjNLsa5NyqS7j/+NFcnbIPPI
+        Nfka4eJyDO913uhlUDnPNBeTSVakdrp4xXBcNijJGq1ozQWjJZ8jxT4IMKBXhzjmolTH/IVSUXSu
+        Mf+OSzY3IRJlN/JnC2lob1XVSlPt3lO8f3HO34QgXnLU6Na8zetwxloKkpmDdeT/AAAA//90W9mO
+        3NYR/Zd51iS1L/oXI3AcIVBiW4Y9CQIE+vegeDnDqksGehEG3ezmZS1n6w7xADxrEhI6rK+xYIoh
+        QrwzmBPksGwzXEAmf1EJAfjY0TdUtcBuUICNCwEqTVhxbhL2IFIm06KVdk6SAQSOCp6wIMViLD50
+        iqBZ4uMKUC+vKdFJEmUYisLolSSxoL7VJ2hhwHQU7qsBnNBn40CGOnqfFiCeSB/MfFWMSyHVxnNS
+        wKFB4EdGQbiDYHIBGZuNNWNu4Wopv0bdMfwQTbSDI4Yd3gOksdVpvpfWWdvjDg9mgkGDQwm7XWzp
+        2BwZMTApx97YRtfuOg7p3uWakdfaPbCQXsDnWAhO1rjqcZl++qv8SILCCSCPuS7nbPR0xDFkVYoM
+        e9+pZKpAebFKQmb0/pGkIcFdGameyzTm0UIZEFNkMeUBLYk50S/55BiTYWSQ0RczchLbrGms7QCE
+        A/hH6PXOxYWoOPa11I9XkYl7H41Y7dlbD0KqijpfCCT2secLEIWP0seg1Ka/HPhMQpx04m5yFOUY
+        8kbNE6thG3AumaP+Whkjl7ISntEoyHGkqSDcQZyYjpGGIAXGxuXMXUa9mfB27WKCFkZyct88riXB
+        2OUrcrQNlYoHb/itwEIktk4Fk0B0mFqYAPlFoFeLR4xu2l6zELUjuXV5ALHYGo12hpC6H28lDubJ
+        6To1HcrbKkSxFMJBhCeyQ0VytQGyqpxJqVdOzew2H5ZE0KEUS0oRhFbvWnAHh+KDBVfe5YEPOiDM
+        RIPTAolvvBWqGi0RrWuJ4FSba8IqoMxrCyxGI4NwC+HF/xZ4D+usccFwJhQnbHuB3PbOIxTeuhgx
+        PearUEwgIBD6wkoygthGDpLoOz9YwqdtZQJZUsiH1rMgvISrRAe3G70mY8U5jKGEWUJy8BMwnUxJ
+        SpOAPihg0q51iCJTi/CYAwKxILzP+6nDJtrOhw3mFgPd9tjaihPRLr10AFxN62LnMY8AgxH6+UUp
+        aDikarWJ89dXFUww74UoBQ2ykwYRYBsiFxYG8ElnjvNP1VkCRUk2qe324DBQ2yeuxmaF2DRKhMBt
+        ddQTuWOLcdbr4QqTFQhsTXMXAe84SZAoaQB9VHffUJ+zTsyn5oAdApGi4dQvSSDZJlNFJrbMnA2i
+        LBLSO1D9VmBpiNFbxnRIs+IYMJWl+9GhAA+ecNCu+JDI16TysEj1zv6YUQh60ZB3UFg35FMTQZVw
+        8/6mB4ZXqIXdcchtJTQoXm99PeCAbAyy4FmqJnecjeMDC/8ADHWiEBcSivaFZ75vLRMVsVll6hIu
+        MUHJ/bkfQupQ7jldEuejIJoe0SLPmsksG0UkdQLqLhvWV9ict909OmqiLtlrWVCbXrrKyHnUnhB0
+        3HIMZyxU2lsCxQrfCr3f+nlPyk7cO5jdIkflQBYFnqo6gIC5EHyIXuvrW055C4XNUAZohzC2y354
+        fWKcGJYEU6k8VBbsRuc6j030wgDW4UsqY26gpGBb1aNS6IJl5+pjmhIAsoLAVN6ftoIKZBdRVkOV
+        5HpNq2PwsWOJW90NZL0ZhmS4icPlmipZ25KHehhFXYc4ZeW6hHP70CfJBBwsrBzi91s77p9QN5Et
+        dvuImAG2ZhfQiMFuDJXVemGlEky7tqiA+rDCykLIoH1dQCS32cmQKMPYLl0GJnnCesLzptHrgUq2
+        J3KXK2scOIzHu90cZjo39HNsGJTNjAbDjAiGfiWeLPNBJj5xQCHZjsyW8KM3V6PX8IdmFCQ53gll
+        aJo3h2tZTWbmvT7fJZmP5+HgnKNXCczVNLtLC6EWbux8OgkLBxmFfcDn49x0Z10cxJsyUEhjEI0a
+        Pn29nYvZFbvhS3nT4R7GW2lPYqUXdkkNgx01rkaABFJ1bm2E2KjMkmeS+aqL5c2I++V3HJ+nysm7
+        mApW8uCGuxh9Q9ngmUNTds7N8mcdZOMMcKCPPj5KigvRaX4Iee9RiOYrLGYyRKj5pI29u+Beg5Tb
+        pxAyWjMq1/4uotujGs8z+YkTgSIH5yRFVZQkcs24JRXjjjKJSSfnx2KR7YyX7tMiB8uG46QJTav1
+        0BwT3s2Oc6sP0eWYlsWydXjnCqI45bfJ1WuOIUdx7C4QeB3lnHtEHjgfQQnpfepBWiTz5H1W0ro2
+        C+GRV9yzCauagoVpQ2U+mGoli27RE+0JF4AxLZGr/m0Ic+hEjkPGJggNv3IdR9tpbHirtnHuatRD
+        06FjAYi5VgklNTAhew1oMYZLXlh4toNwrAmxa6/oBmHd6C0+SiZd0iExZxmGMaMYG7WVzei2qVgl
+        D/T4B2KhHqaBKZ/SR2oRTW5hGiP9/9DvPSJwWqFsG43dPQyGaWjWS2KkwpbElFgErLPJjZGs4yTO
+        6/MW5RTkObHAgJxGMVbmq4ztpgw8KEFG0gJep0RGBf7HMpYY1G2Zo9NzLDYoXXY/iYuJ7txiBzzC
+        nDp1Oiq1PLuCuBQXz8nh0LDLkSsuVTrdFH3FrrH1ftYERuON6brvGiqpzGfOypB9E5CAuL7yJiKZ
+        HaGfC3jV7pnlZBQwv9Y96LKGLHaI/77hskziOefYNNs0XKKC8a4H7abQ8TLuQ3MZYxWu6eYCh9yE
+        heJVBjOgJhbNUHu9YZq7/Xy0t43swVI29uxMY/ilOtU6voDokx61IEJPEtw92pmuWfizyBdN/5RY
+        iFq2colYMc09Zuup0Nc7G11jymJPgZj5qG6QZBKYJIK4ABWOwby3Nd+GEhT2BUxT7jyuW8bLbN40
+        dOrq07o7RNRu+HFQb5s1qEtwYI2eFBWGW+gunCw6E6xUEM4YBpmpI8yk4bRVnsIyM6iFtVlorlEE
+        iimp35YJullOSWXTZ46s4HZGQmYXRF1xiRtQJnakibhdJSkmc4fU4QsesCXSSHr2ZhoFyMAjWnW0
+        jdX1B766ZSWx8gBzdZUFxZk2AJ0i58jnUTlOm/W13cvqAy6W2iZKlRwyzmhbKVk3I1DSdMtMVmBH
+        9pS2zuD0ItkH24hh3UCaTtj4JNySs8sQqIBLcRDLkZlDAt8MFWfOTayHoIHajw8YYlcBgNmTT0EU
+        s214Vwigk8i1odUdBuUoOamC2LdgW8WTkDiYznecME0ox+PazOAlGLkpDB5qQZ02Fu8aKvya9SYT
+        ZJTDdkU6Ks4D3pSdqtctxv2kJATFFnZlsFCZijkJs29GIJtJzy8dxeQO4aPVSlxi79N3v9iKmQzh
+        jpUhZv8buIGMNMwWclpOXc1RZZlDmADp4krL6t6H34w0nWmfmIjqI/tHTwLCieCCA4YOULDRcstK
+        aIGiu2Jc7gH0PbApkxDOanoZPgeDlBn43OO8cHxN9cs/Wb2TWZXcdT8gUXXEd7lVztSrlp8/ffkH
+        QKIo5fLNn2okEcxiZiNqUfXXR5u8kDbPOOp80drt2qW4BVTNefzkAit13P52JjzLX43gqRsVvIch
+        Z2Ehj4gRDtxOokKaFawOBxxAMjvyEe5XWRGXZoYfs83DaFikT/qXsdiMFRW2FdHhMCdrb7z1vGeZ
+        gITSlBH3NtFbmHn+9oEyZNNfCvEXuCVaDC5X4mdaWb4zSoj0+jfSo3V8Hu0Y14qBFvJYoINHBIK9
+        2MOUY8jKKh8/JqkDa0T3YOybclD66ZDP0eAunpX7TTRVPJIR9qVkKVeqLRfZQaCKiccFqB51ilWl
+        eudZLjGJ7y1wJ46SY34hFprcGugmzG9mIul8xZNKtsrf209uniRTrFhOzL8pwVDHNsovArndOCMK
+        43yOqESxQdORzzsmReS2rqEgsfPMtgvFbl7uKrU62MhzMWrMnNmNpHL0GnkOf8+w0fzFyDF3ojwM
+        wxG9IUXUGRU09U2kR45kJO85eCw+tRkDojIRQ832TcG9+60/fHr59td/fPnp7eVz+9Hh9x8+vfzy
+        7W9ffn75/PLrt1++/vT649c/r/8cL3p9+/Kft9d/45/0pb3/569/vL18evnXHz/+/cvL5/++/Pb7
+        t19+e/vL27d/fvn1j5fP8enl7dvbjz9ff/j+/X8AAAD//wMAU8fL2f04AAA=
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c428445f4867ef-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:57:13 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google, 1.1 google
+      x-request-id:
+      - e5ff6e1d-dac3-4738-b3c1-87f35c149157
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"model": "accounts/fireworks/models/firefunction-v2", "stream": false,
+      "messages": [{"role": "system", "content": "You may add or remove memories that
+      are core to the user''s identity or that will help you better interact with
+      the user.\n\n<memory-system>Reflect on following interaction. Use the provided
+      tools to  retain any necessary memories about the user.</memory-system>\n"},
+      {"role": "user", "content": "When I was young, I had a dog named spot\n## End
+      of conversation\n\n<memory-system>Reflect on the interaction above. What memories
+      ought to be retained or updated?</memory-system>"}], "n": 1, "temperature":
+      0.0, "stop": null, "tools": [{"type": "function", "function": {"name": "core_memories",
+      "description": "A list of core memories about the user.", "parameters": {"description":
+      "A list of core memories about the user.", "properties": {"memories": {"items":
+      {"type": "string"}, "title": "Memories", "type": "array"}}, "required": ["memories"],
+      "title": "core_memories", "type": "object"}}}], "tool_choice": {"type": "function",
+      "function": {"name": "core_memories"}}}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/chat/completions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAwAAAP//XJFPT+swEMS/SjRnB16bljQ+IiSEOCCQOCBaRYu9aQ2xHWyXPy/Kd38y
+        T6WI22pG89sd7QijIUHN/GxZ6a5cNl1VLqiuS6r1rHxSK1op6io9VxDwT8+sEiTUjtKJ8nboORnv
+        IKACU2INOatnzWpWLaqFgPWa+4xXyu9diqedCfzuw0s8/bL+C93eqUwp3+YZtPNGcYR8HGGc5g/I
+        PwKWY6QtQ44IvufMjNHERC5BIHnft4r6/nfsq1w2Wv1A9u711r255U3X9MPHxfL+8vzvdU5/Dhl4
+        OAPiOMoRjmx2lQ/cWrY+GI4QoLDdW3YpQmJc4+CsIYvHNa6KHemCCu23RQboIg4+rbGZME2bSaAz
+        zsRdG5hiXvOzwbQR2B/KDsHbIbXJv7CLkIuzJrdN1B+lphY4vuJbn6+m6R8AAAD//wMAJiM1SN4B
+        AAA=
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c428475fa79679-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:57:13 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google
+      fireworks-server-processing-time:
+      - '0.262'
+      x-request-id:
+      - adf2eeef-2fb3-4ea6-8a12-14d0b5dfd674
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["{\"memories\":[\"I had a dog named spot\"]}"], "model": "nomic-ai/nomic-embed-text-v1.5",
+      "encoding_format": "base64"}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/embeddings
+  response:
+    body:
+      string: !!binary |
+        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
+        8HO78scf/w8AAP//AwAO1pSQ+zgAAA==
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c4284a8cad67ef-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:57:14 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google, 1.1 google
+      x-request-id:
+      - 8d399c4e-3b7f-4b3e-9d37-a6be11c32821
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"model": "accounts/fireworks/models/firefunction-v2", "stream": false,
+      "messages": [{"role": "system", "content": "You may add or remove memories that
+      are core to the user''s identity or that will help you better interact with
+      the user.\n\n<memory-system>Reflect on following interaction. Use the provided
+      tools to  retain any necessary memories about the user.</memory-system>\n\n\nGenerate
+      a JSONPatch to update the existing schema instances.\n\n<schema id=core_memories>\n<instance>\n{''memories'':
+      [''I am afraid of spiders.'']}\n</instance>\n<json_schema>\n{''description'':
+      ''A list of core memories about the user.'', ''properties'': {''memories'':
+      {''description'': None, ''examples'': None, ''items'': {''type'': ''string''},
+      ''title'': ''Memories'', ''type'': ''array''}}, ''required'': [''memories''],
+      ''title'': ''core_memories'', ''type'': ''object''}\n</json_schema>\n</schema>\n"},
+      {"role": "user", "content": "When I was young, I had a dog named spot.\n## End
+      of conversation\n\n<memory-system>Reflect on the interaction above. What memories
+      ought to be retained or updated?</memory-system>"}], "n": 1, "temperature":
+      0.0, "stop": null, "tools": [{"type": "function", "function": {"name": "PatchFunctionParameters",
+      "description": "Respond with all JSONPatch operations required to update the
+      previous function call.\n\nUse to correct all validation errors in non-compliant
+      function calls,\nor to extend or update existing structured data in the presence
+      of new information.", "parameters": {"type": "object", "properties": {"schema_id":
+      {"description": "The ID of the function you are patching.", "type": "string"},
+      "reasoning": {"description": "Think step-by-step, listing each validation error
+      and the JSONPatch operation needed to correct it. Cite the fields in the JSONSchema
+      you referenced in developing this plan.", "type": "string"}, "patches": {"description":
+      "A list of JSONPatch operations to be applied to the previous tool call''s response.",
+      "type": "array", "items": {"description": "A JSON Patch document represents
+      an operation to be performed on a JSON document.\n\nNote that the op and path
+      are ALWAYS required. Value is required for ALL operations except ''remove''.\n\nExamples:\n```json\n{\"op\":
+      \"add\", \"path\": \"/a/b/c\", \"patch_value\": 1}\n{\"op\": \"replace\", \"path\":
+      \"/a/b/c\", \"patch_value\": 2}\n{\"op\": \"remove\", \"path\": \"/a/b/c\"}\n```",
+      "type": "object", "properties": {"op": {"description": "The operation to be
+      performed. Must be one of ''add'', ''remove'', ''replace''.", "enum": ["add",
+      "remove", "replace"], "type": "string"}, "path": {"description": "A JSON Pointer
+      path that references a location within the target document where the operation
+      is performed.", "type": "string"}, "value": {"description": "The value to be
+      used within the operation. REQUIRED for ''add'', ''replace'', and ''test'' operations.",
+      "anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"type": "array", "items": {"anyOf": [{"type": "string"}, {"type":
+      "integer"}, {"type": "boolean"}, {"type": "number"}]}}, {"type": "object", "additionalProperties":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}]}}, {"type": "array", "items": {"anyOf": [{"type": "string"}, {"type":
+      "integer"}, {"type": "boolean"}, {"type": "number"}, {"type": "array", "items":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}]}}, {"type": "object", "additionalProperties": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}]}}]}},
+      {"type": "object", "additionalProperties": {"anyOf": [{"type": "string"}, {"type":
+      "integer"}, {"type": "boolean"}, {"type": "number"}, {"type": "array", "items":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}]}}, {"type": "object", "additionalProperties": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}]}}]}}]}},
+      "required": ["op", "path", "value"]}}}, "required": ["schema_id", "reasoning",
+      "patches"]}}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/chat/completions
+  response:
+    body:
+      string: '{"error":{"object":"error","type":"invalid_request_error","message":"Invalid
+        JSON: [{\"name\": \"PatchFunctionParameters\", \"arguments\": {\"schema_id\":
+        \"core_memories\", \"reasoning\": \"The user mentioned having a dog named
+        Spot when they were young. This memory is core to the user''s identity and
+        should be retained.\", \"patches\": [{\"op\": \"add\", \"path\": \"/memories/0\",
+        \"value\": \"I had a dog named Spot when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\",
+        \"arguments\": {\"schema_id\": \"core_memories\", \"reasoning\": \"The user
+        mentioned having a dog named Spot when they were young. This memory is core
+        to the user''s identity and should be retained.\", \"patches\": [{\"op\":
+        \"replace\", \"path\": \"/memories/0\", \"value\": \"I had a dog named Spot
+        when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\", \"arguments\":
+        {\"schema_id\": \"core_memories\", \"reasoning\": \"The user mentioned having
+        a dog named Spot when they were young. This memory is core to the user''s
+        identity and should be retained.\", \"patches\": [{\"op\": \"add\", \"path\":
+        \"/memories/1\", \"value\": \"I had a dog named Spot when I was young.\"}]}},
+        {\"name\": \"PatchFunctionParameters\", \"arguments\": {\"schema_id\": \"core_memories\",
+        \"reasoning\": \"The user mentioned having a dog named Spot when they were
+        young. This memory is core to the user''s identity and should be retained.\",
+        \"patches\": [{\"op\": \"replace\", \"path\": \"/memories/1\", \"value\":
+        \"I had a dog named Spot when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\",
+        \"arguments\": {\"schema_id\": \"core_memories\", \"reasoning\": \"The user
+        mentioned having a dog named Spot when they were young. This memory is core
+        to the user''s identity and should be retained.\", \"patches\": [{\"op\":
+        \"add\", \"path\": \"/memories/2\", \"value\": \"I had a dog named Spot when
+        I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\", \"arguments\":
+        {\"schema_id\": \"core_memories\", \"reasoning\": \"The user mentioned having
+        a dog named Spot when they were young. This memory is core to the user''s
+        identity and should be retained.\", \"patches\": [{\"op\": \"replace\", \"path\":
+        \"/memories/2\", \"value\": \"I had a dog named Spot when I was young.\"}]}},
+        {\"name\": \"PatchFunctionParameters\", \"arguments\": {\"schema_id\": \"core_memories\",
+        \"reasoning\": \"The user mentioned having a dog named Spot when they were
+        young. This memory is core to the user''s identity and should be retained.\",
+        \"patches\": [{\"op\": \"add\", \"path\": \"/memories/3\", \"value\": \"I
+        had a dog named Spot when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\",
+        \"arguments\": {\"schema_id\": \"core_memories\", \"reasoning\": \"The user
+        mentioned having a dog named Spot when they were young. This memory is core
+        to the user''s identity and should be retained.\", \"patches\": [{\"op\":
+        \"replace\", \"path\": \"/memories/3\", \"value\": \"I had a dog named Spot
+        when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\", \"arguments\":
+        {\"schema_id\": \"core_memories\", \"reasoning\": \"The user mentioned having
+        a dog named Spot when they were young. This memory is core to the user''s
+        identity and should be retained.\", \"patches\": [{\"op\": \"add\", \"path\":
+        \"/memories/4\", \"value\": \"I had a dog named Spot when I was young.\"}]}},
+        {\"name\": \"PatchFunctionParameters\", \"arguments\": {\"schema_id\": \"core_memories\",
+        \"reasoning\": \"The user mentioned having a dog named Spot when they were
+        young. This memory is core to the user''s identity and should be retained.\",
+        \"patches\": [{\"op\": \"replace\", \"path\": \"/memories/4\", \"value\":
+        \"I had a dog named Spot when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\",
+        \"arguments\": {\"schema_id\": \"core_memories\", \"reasoning\": \"The user
+        mentioned having a dog named Spot when they were young. This memory is core
+        to the user''s identity and should be retained.\", \"patches\": [{\"op\":
+        \"add\", \"path\": \"/memories/5\", \"value\": \"I had a dog named Spot when
+        I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\", \"arguments\":
+        {\"schema_id\": \"core_memories\", \"reasoning\": \"The user mentioned having
+        a dog named Spot when they were young. This memory is core to the user''s
+        identity and should be retained.\", \"patches\": [{\"op\": \"replace\", \"path\":
+        \"/memories/5\", \"value\": \"I had a dog named Spot when I was young.\"}]}},
+        {\"name\": \"PatchFunctionParameters\", \"arguments\": {\"schema_id\": \"core_memories\",
+        \"reasoning\": \"The user mentioned having a dog named Spot when they were
+        young. This memory is core to the user''s identity and should be retained.\",
+        \"patches\": [{\"op\": \"add\", \"path\": \"/memories/6\", \"value\": \"I
+        had a dog named Spot when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\",
+        \"arguments\": {\"schema_id\": \"core_memories\", \"reasoning\": \"The user
+        mentioned having a dog named Spot when they were young. This memory is core
+        to the user''s identity and should be retained.\", \"patches\": [{\"op\":
+        \"replace\", \"path\": \"/memories/6\", \"value\": \"I had a dog named Spot
+        when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\", \"arguments\":
+        {\"schema_id\": \"core_memories\", \"reasoning\": \"The user mentioned having
+        a dog named Spot when they were young. This memory is core to the user''s
+        identity and should be retained.\", \"patches\": [{\"op\": \"add\", \"path\":
+        \"/memories/7\", \"value\": \"I had a dog named Spot when I was young.\"}]}},
+        {\"name\": \"PatchFunctionParameters\", \"arguments\": {\"schema_id\": \"core_memories\",
+        \"reasoning\": \"The user mentioned having a dog named Spot when they were
+        young. This memory is core to the user''s identity and should be retained.\",
+        \"patches\": [{\"op\": \"replace\", \"path\": \"/memories/7\", \"value\":
+        \"I had a dog named Spot when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\",
+        \"arguments\": {\"schema_id\": \"core_memories\", \"reasoning\": \"The user
+        mentioned having a dog named Spot when they were young. This memory is core
+        to the user''s identity and should be retained.\", \"patches\": [{\"op\":
+        \"add\", \"path\": \"/memories/8\", \"value\": \"I had a dog named Spot when
+        I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\", \"arguments\":
+        {\"schema_id\": \"core_memories\", \"reasoning\": \"The user mentioned having
+        a dog named Spot when they were young. This memory is core to the user''s
+        identity and should be retained.\", \"patches\": [{\"op\": \"replace\", \"path\":
+        \"/memories/8\", \"value\": \"I had a dog named Spot when I was young.\"}]}},
+        {\"name\": \"PatchFunctionParameters\", \"arguments\": {\"schema_id\": \"core_memories\",
+        \"reasoning\": \"The user mentioned having a dog named Spot when they were
+        young. This memory is core to the user''s identity and should be retained.\",
+        \"patches\": [{\"op\": \"add\", \"path\": \"/memories/9\", \"value\": \"I
+        had a dog named Spot when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\",
+        \"arguments\": {\"schema_id\": \"core_memories\", \"reasoning\": \"The user
+        mentioned having a dog named Spot when they were young. This memory is core
+        to the user''s identity and should be retained.\", \"patches\": [{\"op\":
+        \"replace\", \"path\": \"/memories/9\", \"value\": \"I had a dog named Spot
+        when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\", \"arguments\":
+        {\"schema_id\": \"core_memories\", \"reasoning\": \"The user mentioned having
+        a dog named Spot when they were young. This memory is core to the user''s
+        identity and should be retained.\", \"patches\": [{\"op\": \"add\", \"path\":
+        \"/memories/10\", \"value\": \"I had a dog named Spot when I was young.\"}]}},
+        {\"name\": \"PatchFunctionParameters\", \"arguments\": {\"schema_id\": \"core_memories\",
+        \"reasoning\": \"The user mentioned having a dog named Spot when they were
+        young. This memory is core to the user''s identity and should be retained.\",
+        \"patches\": [{\"op\": \"replace\", \"path\": \"/memories/10\", \"value\":
+        \"I had a dog named Spot when I was young.\"}]}}, {\"name\": \"PatchFunctionParameters\",
+        \"arguments\": {\"schema_id\": \"core_memories\", \"reasoning\": \"The user
+        mentioned having a dog named Spot when they were young. This memory is core
+        to the user''s identity and should be retained.\", \"patches\": [{\"op\":
+        \"add\", \"path\": \"/memories/11\","}}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c4284d8cfed029-SJC
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '8398'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:57:24 GMT
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google
+      x-request-id:
+      - 8ef1a2bf-9787-4d70-becc-a8b35f33bf4e
+    status:
+      code: 400
+      message: Bad Request
+- request:
+    body: '{"max_tokens": 1024, "messages": [{"role": "user", "content": "## End of
+      conversation\n\n<memory-system>Reflect on the interaction above. What memories
+      ought to be retained or updated?</memory-system>"}], "model": "claude-3-5-sonnet-20240620",
+      "system": "You may add or remove memories that are core to the user''s identity
+      or that will help you better interact with the user.\n\n<memory-system>Reflect
+      on following interaction. Use the provided tools to  retain any necessary memories
+      about the user.</memory-system>\n", "tool_choice": {"type": "tool", "name":
+      "core_memories"}, "tools": [{"name": "core_memories", "description": "A list
+      of core memories about the user.", "input_schema": {"description": "A list of
+      core memories about the user.", "properties": {"memories": {"items": {"type":
+      "string"}, "title": "Memories", "type": "array"}}, "required": ["memories"],
+      "title": "core_memories", "type": "object"}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.anthropic.com/v1/messages
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA1SQW2vCQBCF/8oyzxuIUUPdt1r6WGmx2ItI2GYnupjMxL0oNuS/l6S04ON8c87h
+        cDqwBhQ0fl+kk+XH03L9tbxmVfswX7Rvz1WO30eQEK4tDir0Xu8RJDiuB6C9tz5oCiChYYM1KChr
+        HQ0m02SeeCbCkGRpNkvzLAUJJVNACqC23V9oYK6L6IfUscpwxyKd5MfD5nV9935vwstquokn8/lo
+        JiCBdDP4SnZYNNiws+gHM7UxgOrgn6ktrFg0qMnSvoq1sBTQ6TJYJsFOEF6EpYpdo0d00V60js/W
+        oBGWRDhYL0qmMzo/KmDX9zsJPnBbONSe6bb/+PB4ikglgqJY1xLiOJnqfgsWgY9IHtQsX0jgGG7Y
+        vO9/AAAA//8DAJV9HhORAQAA
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 89c429fc7db0238f-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:24 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      request-id:
+      - req_01GrZzVXbBUyobt9trG5dfVT
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - a1402171d27bf477392b492343987008
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["{\"memories\":[\"No meaningful interaction or new information
+      was provided in this conversation\"]}"], "model": "nomic-ai/nomic-embed-text-v1.5",
+      "encoding_format": "base64"}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/embeddings
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c42a050bd1965d-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:25 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google, 1.1 google
+      x-request-id:
+      - d0a89186-2784-4f62-8274-0453e928c45c
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"max_tokens": 1024, "messages": [{"role": "user", "content": "When I was
+      young, I had a dog named spot\n## End of conversation\n\n<memory-system>Reflect
+      on the interaction above. What memories ought to be retained or updated?</memory-system>"}],
+      "model": "claude-3-5-sonnet-20240620", "system": "You may add or remove memories
+      that are core to the user''s identity or that will help you better interact
+      with the user.\n\n<memory-system>Reflect on following interaction. Use the provided
+      tools to  retain any necessary memories about the user.</memory-system>\n",
+      "tool_choice": {"type": "tool", "name": "core_memories"}, "tools": [{"name":
+      "core_memories", "description": "A list of core memories about the user.", "input_schema":
+      {"description": "A list of core memories about the user.", "properties": {"memories":
+      {"items": {"type": "string"}, "title": "Memories", "type": "array"}}, "required":
+      ["memories"], "title": "core_memories", "type": "object"}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.anthropic.com/v1/messages
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA1SQwWrCQBCGX2WZ86bEVGvdmx56kUrBelEkrMk0sSY76c5sJYS8e1lLCx7nn/l+
+        PmaAcwkGWq7ydLLaL/1q173NqeXd9mNTvFzsOoAG6TuMV8hsKwQNnpoYWOYzi3UCGloqsQEDRWND
+        icljMkuYnENJsjSbpk9ZChoKcoJOwByGv1IhavLAsfWmEueQp5PFpp9/Lpa82i/X36+7akbZye5B
+        g7Nt5ArymLfYkj8jR9h1QcAM8J+ZA7zXqAKjV7UtlVUlVSripdp2JOpao1NSY6+u6FH1FFz1AMdx
+        PGpgoS73aJncveRtwfgV0BUIxoWm0RBufzHDr0UudEHHYKbPEw0U5C6bj+MPAAAA//8DAI2UT8J2
+        AQAA
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 89c42a088a9e7ace-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:26 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      request-id:
+      - req_01EYrrd9wJkN3un3uJiaQFeu
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - 9c414d61bd086d1a281a9c1f2b7cace0
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["{\"memories\":[\"The user had a dog named Spot when they were
+      young.\"]}"], "model": "nomic-ai/nomic-embed-text-v1.5", "encoding_format":
+      "base64"}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/embeddings
+  response:
+    body:
+      string: !!binary |
+        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
+        d3qUOAAA
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c42a0f597b965d-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:26 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google, 1.1 google
+      x-request-id:
+      - e50e2113-8429-484a-bca3-faeb487b5f0a
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"max_tokens": 1024, "messages": [{"role": "user", "content": "When I was
+      young, I had a dog named spot.\n## End of conversation\n\n<memory-system>Reflect
+      on the interaction above. What memories ought to be retained or updated?</memory-system>"}],
+      "model": "claude-3-5-sonnet-20240620", "system": "You may add or remove memories
+      that are core to the user''s identity or that will help you better interact
+      with the user.\n\n<memory-system>Reflect on following interaction. Use the provided
+      tools to  retain any necessary memories about the user.</memory-system>\n\n\nGenerate
+      a JSONPatch to update the existing schema instances.\n\n<schema id=core_memories>\n<instance>\n{''memories'':
+      [''I am afraid of spiders.'']}\n</instance>\n<json_schema>\n{''description'':
+      ''A list of core memories about the user.'', ''properties'': {''memories'':
+      {''description'': None, ''examples'': None, ''items'': {''type'': ''string''},
+      ''title'': ''Memories'', ''type'': ''array''}}, ''required'': [''memories''],
+      ''title'': ''core_memories'', ''type'': ''object''}\n</json_schema>\n</schema>\n",
+      "tools": [{"name": "PatchFunctionParameters", "description": "Respond with all
+      JSONPatch operations required to update the previous function call.\n\nUse to
+      correct all validation errors in non-compliant function calls,\nor to extend
+      or update existing structured data in the presence of new information.", "input_schema":
+      {"type": "object", "properties": {"schema_id": {"description": "The ID of the
+      function you are patching.", "type": "string"}, "reasoning": {"description":
+      "Think step-by-step, listing each validation error and the JSONPatch operation
+      needed to correct it. Cite the fields in the JSONSchema you referenced in developing
+      this plan.", "type": "string"}, "patches": {"description": "A list of JSONPatch
+      operations to be applied to the previous tool call''s response.", "type": "array",
+      "items": {"description": "A JSON Patch document represents an operation to be
+      performed on a JSON document.\n\nNote that the op and path are ALWAYS required.
+      Value is required for ALL operations except ''remove''.\n\nExamples:\n```json\n{\"op\":
+      \"add\", \"path\": \"/a/b/c\", \"patch_value\": 1}\n{\"op\": \"replace\", \"path\":
+      \"/a/b/c\", \"patch_value\": 2}\n{\"op\": \"remove\", \"path\": \"/a/b/c\"}\n```",
+      "type": "object", "properties": {"op": {"description": "The operation to be
+      performed. Must be one of ''add'', ''remove'', ''replace''.", "enum": ["add",
+      "remove", "replace"], "type": "string"}, "path": {"description": "A JSON Pointer
+      path that references a location within the target document where the operation
+      is performed.", "type": "string"}, "value": {"description": "The value to be
+      used within the operation. REQUIRED for ''add'', ''replace'', and ''test'' operations.",
+      "anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"type": "array", "items": {"anyOf": [{"type": "string"}, {"type":
+      "integer"}, {"type": "boolean"}, {"type": "number"}]}}, {"type": "object", "additionalProperties":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}]}}, {"type": "array", "items": {"anyOf": [{"type": "string"}, {"type":
+      "integer"}, {"type": "boolean"}, {"type": "number"}, {"type": "array", "items":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}]}}, {"type": "object", "additionalProperties": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}]}}]}},
+      {"type": "object", "additionalProperties": {"anyOf": [{"type": "string"}, {"type":
+      "integer"}, {"type": "boolean"}, {"type": "number"}, {"type": "array", "items":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}]}}, {"type": "object", "additionalProperties": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}]}}]}}]}},
+      "required": ["op", "path", "value"]}}}, "required": ["schema_id", "reasoning",
+      "patches"]}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.anthropic.com/v1/messages
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3RUTW/bOBD9KwNefJFdfySLVrcukKLdFN02CTZom8IYiyOJKDXDJSk7RuD/viBl
+        JfYWPQnkzJt5M++JT8poVaouNOv54k133V09Xi1+flnR49fN1c1u9c/brSpU3DtKWRQCNqQK5cWm
+        CwzBhIgcVaE60WRVqSqLvabpano5DcJMcbqcLy/mfyznqlCVcCSOqvz+NBaN9Jjg+VOqPzGQBmGI
+        LYHhSB6raIQL2BG0uCWwhJ5JAwLTDpyhikBqMFyL7zDlAm6kj7lCH8hPAjgM6YwRKumthg3BFm2P
+        G0sQBTx11G3IQy0e6j72nqAS3pIPuWCYwV1rwlkPTxYjhQRHqFpjdSuiwVEsYNeaqgUTQOpIDAjB
+        NGxqUyFH6KgTv8+tHImzNIOPFCcBUGuIqU2UU+6VeBpAhsLsgR/4TqB3GiPltBRfj3EIVUsdpm1N
+        rE0lcs5njFX7rue8ys/osaNIPnUSmycYW6eVDgRn8J48TQK0sjtW0wImlupQvGgnYtd9SI7INkrn
+        fj1f3FTu3fuI8Rtd312uLq7N5uOnxqlCMXYJ9xs+qQy7PqrySQ2DrHPZsxGT+wiDsOFGleruuClo
+        MUBo0WdrOPJBGO247cERLW4NN4CgpYFERcOtkwi7lrLh9rAjT7CXnptR8vA/+V6kPpbOtgrt6CvU
+        mvQo4bl2cE/ANESfN37qqSOKHk2IiehkhE4Avcc9GP6t5NkZN1STJ64SOCX+dfv3p9scLh94kUai
+        06K1IavziHxsIDWE6A03yWnLXxgP/9yQMbBN4IQcjamHy1MDYqaRJYcJaj0BceSfJ0bniHWm++K+
+        51WwTpziOe+hoyqUS0Up5OdEXHqQtB6uW1WqVyPi1VQVKv3wyXv3SewPsMMwCF3AB2hR/+KKmTr8
+        OBx+FCpEcevBcueWz4FA//bEFamSe2sL1ecXsnwanLyO8pM4qHJxsXpdKOnj6eXqcnk4/AcAAP//
+        AwAv6WwTggUAAA==
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 89c42a121a23642f-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:32 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      request-id:
+      - req_01ExLkF8Dk1hJVSpS2KvzCoj
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - c3d6d89f70adab4feba43804b3eb9bc7
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["{\"memories\":[\"I am afraid of spiders.\",\"When I was young,
+      I had a dog named Spot.\"]}"], "model": "nomic-ai/nomic-embed-text-v1.5", "encoding_format":
+      "base64"}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/embeddings
+  response:
+    body:
+      string: !!binary |
+        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
+        AAD//wMAklKMQM84AAA=
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c42a37ee3e6899-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:33 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google, 1.1 google
+      x-request-id:
+      - 14642e98-eebe-4868-a1fe-f8e9eb2570a6
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"max_tokens": 1024, "messages": [{"role": "user", "content": "## End of
+      conversation\n\n<memory-system>Reflect on the interaction above. What memories
+      ought to be retained or updated?</memory-system>"}], "model": "claude-3-5-sonnet-20240620",
+      "system": "Extract all events that are memorable and relevant to the user. using
+      parallel tool calling. If nothing of interest occured in the diologue, simply
+      reply ''None''.\n\n<memory-system>Reflect on following interaction. Use the
+      provided tools to  retain any necessary memories about the user.</memory-system>\n",
+      "tools": [{"name": "memorable_event", "description": "Any event, observation,
+      insight, or other detail that you may want to recall in later interactions with
+      the user.", "input_schema": {"description": "Any event, observation, insight,
+      or other detail that you may want to recall in later interactions with the user.",
+      "properties": {"description": {"title": "Description", "type": "string"}, "participants":
+      {"description": "Names of participants in the event and their relationship to
+      the user.", "items": {"type": "string"}, "title": "Participants", "type": "array"}},
+      "required": ["description", "participants"], "title": "memorable_event", "type":
+      "object"}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.anthropic.com/v1/messages
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA0xSwY7TQAz9FcvntOoWuojc4AZICMRKILGommScxGJih7En3bLqv6Nku2hP47Hf
+        s/2e/IgcscbR+uPu5uPNj0P4O387fW3efvr+UN7NX3pnrNDPEy0oMgs9YYVZ05IIZmwexLHCUSMl
+        rLFNoUTavNocNqYi5Jv9bv96d7vfYYWtipM41j8fn5s6PSz09anxfTCKoAI+ELA45dA6q8CUdeZI
+        sVoqmSBkAlGwiVruuAWaSdwq0MYoz2HhLL8MLMb94AY+BAchiuAKDUEmDywUIRiMNGoOTaJrny3c
+        DQTFKIPxOKUzsERugy/sgYAkgnZr2KrMlG2dCCf2QYtft2XpIcgZrDSrSxwSsHSaxye0ZiDpQ7/g
+        WCDASEFY+q4kiByS9oW293Ivd4vkTjNV8AFOnBJkskklrgPrBfJZhf5Dn93JlGgO4k/6mOwq3Vzz
+        YnOGMsVVVJd1BB/YoMlM3Uvrt3j5VaG5TsdMwVSwRpJ49JIFrwWjP4WkJaylpFRhWe+kfkSWqfjR
+        9TeJYX043FaoxV/m3hwul38AAAD//wMAzCTQoIYCAAA=
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 89c42a3aa97215da-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:35 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      request-id:
+      - req_01KbGbUx67M2rtaHh32qZaQw
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - edab2e3dbc09c0e2d7121903f95202fa
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"max_tokens": 1024, "messages": [{"role": "user", "content": "I went to
+      the beach with my friends."}, {"role": "assistant", "content": "That sounds
+      like a fun day."}, {"role": "user", "content": "## End of conversation\n\n<memory-system>Reflect
+      on the interaction above. What memories ought to be retained or updated?</memory-system>"}],
+      "model": "claude-3-5-sonnet-20240620", "system": "Extract all events that are
+      memorable and relevant to the user. using parallel tool calling. If nothing
+      of interest occured in the diologue, simply reply ''None''.\n\n<memory-system>Reflect
+      on following interaction. Use the provided tools to  retain any necessary memories
+      about the user.</memory-system>\n", "tools": [{"name": "memorable_event", "description":
+      "Any event, observation, insight, or other detail that you may want to recall
+      in later interactions with the user.", "input_schema": {"description": "Any
+      event, observation, insight, or other detail that you may want to recall in
+      later interactions with the user.", "properties": {"description": {"title":
+      "Description", "type": "string"}, "participants": {"description": "Names of
+      participants in the event and their relationship to the user.", "items": {"type":
+      "string"}, "title": "Participants", "type": "array"}}, "required": ["description",
+      "participants"], "title": "memorable_event", "type": "object"}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.anthropic.com/v1/messages
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA1RRXW/bMAz8KwRf+qIEtpukg96aotvDgqLAhmFIUbiKTdfCbMkVqXZD4P8+SEG/
+        ngSSd7w76oi2RY0jP9ZFebnfft2QC/vr84vd76q92v7YmRtUKP8mSihiNo+ECoMfUsMwWxbjBBWO
+        vqUBNTaDiS0tzhfrBXvnSBZVUa2KTVWgwsY7ISeo746vS4X+Jnp+NP7sLYN1QsE0Yr2DxDDWMRgY
+        afTBHAYCeiYnIL0R4N7HoYUDQaAEpHYJO5IzhsgE0hM8vPHqzHuALrrTcvHA4kPCZdnOh9GkyRJn
+        9e7Q+6GOnHLnY6U61kV5S4er78/lutvfrrbfVt0vks3EqNCZ8XSuT7qJ7qYoqI/YEjfBTkkqh6bk
+        NsBLjuWz7QOZpocXK30qbYAuWHItL1HhZILYxk7GCaO+w0RGlZ8zfgXi/TzfK2TxUx3IcJb6kCUP
+        mJ4iuYZQuzgMaUX6YH08Wa3F/yHHqNcXXxT6KB97ZVnN838AAAD//wMAQsO+0EACAAA=
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 89c42a4a2c8d96b4-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:37 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      request-id:
+      - req_01TZZM1vDYBtJugiPvsBkVwA
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - 6073d2747ce50e0783270119b3e6e2df
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["{\"description\":\"The user went to the beach with their friends.\",\"participants\":[\"user\",\"user''s
+      friends\"]}"], "model": "nomic-ai/nomic-embed-text-v1.5", "encoding_format":
+      "base64"}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/embeddings
+  response:
+    body:
+      string: !!binary |
+        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
+        S8aPOAAA
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c42a570b5a6899-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:38 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google, 1.1 google
+      x-request-id:
+      - b156ca79-713d-4018-a3fa-42c4da5dae8c
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"max_tokens": 1024, "messages": [{"role": "user", "content": "I went to
+      the beach with my friends."}, {"role": "assistant", "content": "That sounds
+      like a fun day."}, {"role": "user", "content": "I also went to the park with
+      my family - I like the park.\n## End of conversation\n\n<memory-system>Reflect
+      on the interaction above. What memories ought to be retained or updated?</memory-system>"}],
+      "model": "claude-3-5-sonnet-20240620", "system": "Extract all events that are
+      memorable and relevant to the user. using parallel tool calling. If nothing
+      of interest occured in the diologue, simply reply ''None''.\n\n<memory-system>Reflect
+      on following interaction. Use the provided tools to  retain any necessary memories
+      about the user.</memory-system>\n", "tools": [{"name": "memorable_event", "description":
+      "Any event, observation, insight, or other detail that you may want to recall
+      in later interactions with the user.", "input_schema": {"description": "Any
+      event, observation, insight, or other detail that you may want to recall in
+      later interactions with the user.", "properties": {"description": {"title":
+      "Description", "type": "string"}, "participants": {"description": "Names of
+      participants in the event and their relationship to the user.", "items": {"type":
+      "string"}, "title": "Participants", "type": "array"}}, "required": ["description",
+      "participants"], "title": "memorable_event", "type": "object"}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.anthropic.com/v1/messages
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6ySwW7bMAyGX0XgZRcnSNKkaX3bgA7bgAFz0KzDisJVLCbWIlOeSMVpg7z7IKft
+        usuww06SqJ8/P1I6gDWQQ8ObcjR+e9F9Wm1tc26K+Y8rvNrX7Wf6ABnIQ4tJhcx6g5BB8C4FNLNl
+        0SSQQeMNOsihcjoaHJwNZgP2RCiDyWgyHZ1PRpBB5UmQBPLbw7Op4D6l90sO7zSjUZ6U1KgqTzsM
+        rMV6ylIkoNIBlXReNdj4oFcOFe6QhJXUWhTXPjqjVqgCiraERumVj9LbRcYwVB/fOJe2fej+xabs
+        be7VOlKV6inxKmDlg0lCfi4zhGP2G917V0ZOA+mnmM6xHI2XX5dzPV5c2Nlu3RU33yc333aLNEfS
+        zWmOfxRN6dRGgfwABrkKtk0EkMP1E7XqkCQRJeYV6qpWnZVarYNFMjyEDFodxFa21SQM+S0sGQNk
+        8P6kgLvjP3AvumsuurPGPF4WhV/wtHicf1n8L+5Wh+0Ttm6se1CajMJ9G5DTmzu7tbR5Uf6tpz49
+        tXSXAYtvy4Ca+8KvOusvGH9GpAohp+hcBrH/v/nhBF6K3yIx5LPLaQY+yuvY+GJ+PP4CAAD//wMA
+        bEnMCB8DAAA=
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 89c42a59b879f9d8-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:40 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      request-id:
+      - req_01X8G3WbTosFAMdQBvQMNF9c
+      via:
+      - 1.1 google
+      x-cloud-trace-context:
+      - bbcf690ab914c2d6a7534d8e0801d96e
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input": ["{\"description\":\"The user went to the beach with friends.\",\"participants\":[\"User\",\"Friends\"]}",
+      "{\"description\":\"The user went to the park with family and expressed liking
+      the park.\",\"participants\":[\"User\",\"Family\"]}"], "model": "nomic-ai/nomic-embed-text-v1.5",
+      "encoding_format": "base64"}'
+    headers: {}
+    method: POST
+    uri: https://api.fireworks.ai/inference/v1/embeddings
+  response:
+    body:
+      string: !!binary |
+        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
+        T9fuN+/v/wAAAP//AwCuxEGGH3EAAA==
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 89c42a69f8236899-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Jul 2024 05:58:41 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 google, 1.1 google
+      x-request-id:
+      - a1a2c601-1017-4c5a-8322-e08ef37ba9fd
+    status:
+      code: 200
+      message: OK
+version: 1

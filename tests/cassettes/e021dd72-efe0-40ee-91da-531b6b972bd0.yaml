@@ -1,0 +1,568 @@
+interactions:
+- request:
+    body: '{"messages": [{"content": "Extract all relationships mentioned. Call Relationship
+      once per-relationship.\n\n<memory-system>Reflect on following interaction. Use
+      the provided tools to  retain any necessary memories about the user.</memory-system>\n",
+      "role": "system"}, {"content": "I''ve been thinking about my old friend Joanne
+      Steine lately. We met in 3rd grade and were inseparable for years.", "role":
+      "user"}, {"content": "It''s nice that you''re reminiscing about your childhood
+      friend Joanne. Friendships from that age can be very special. How are things
+      between you two now?", "role": "assistant"}, {"content": "Well, that''s the
+      thing. We''ve been drifting apart over the years. It''s sad, but I guess it
+      happens sometimes.", "role": "user"}, {"content": "I''m sorry to hear that you
+      and Joanne have been drifting apart. It''s true that relationships can change
+      over time. Is there anything specific that''s contributed to the distance between
+      you?", "role": "assistant"}, {"content": "Not really, just life getting in the
+      way I suppose. But you know, it makes me even more grateful for my friend Anthony.
+      Despite living far apart, we still manage to stay connected.", "role": "user"},
+      {"content": "It''s wonderful that you have a friend like Anthony who you can
+      maintain a strong connection with despite the distance. Long-lasting friendships
+      like that are truly valuable. How do you and Anthony manage to stay close?",
+      "role": "assistant"}, {"content": "We make an effort to call each other regularly
+      and share important moments in our lives. It''s not always easy, but it''s worth
+      it.\n## End of conversation\n\n<memory-system>Reflect on the interaction above.
+      What memories ought to be retained or updated?</memory-system>", "role": "user"}],
+      "model": "gpt-4o", "n": 1, "stream": false, "temperature": 0.7, "tool_choice":
+      "required", "tools": [{"type": "function", "function": {"name": "Relationship",
+      "description": "A relationship memory type for insertion.\n\n    Call for each
+      distinct indivual the user interacts with.\n    ", "parameters": {"description":
+      "A relationship memory type for insertion.\n\nCall for each distinct indivual
+      the user interacts with.", "properties": {"name": {"description": "The legal
+      name of the person.", "title": "Name", "type": "string"}, "preferred_name":
+      {"description": "The name of the person in the relationship", "title": "Preferred
+      Name", "type": "string"}, "relation_to_user": {"description": "The type of relationship
+      (e.g., friend, sister, brother, grandmother, colleague)", "title": "Relation
+      To User", "type": "string"}, "recent_interactions": {"description": "List of
+      recent interactions with this person", "items": {"type": "string"}, "title":
+      "Recent Interactions", "type": "array"}, "notes": {"description": "Other important
+      information about this individual and how they relate to the user.", "title":
+      "Notes", "type": "string"}}, "required": ["name", "preferred_name", "relation_to_user",
+      "recent_interactions", "notes"], "title": "Relationship", "type": "object"}}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.openai.com/v1/chat/completions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAwAAAP//zFRNb9NAEL3nV4z2nFTNd8mtgYiqFV8FKihB1mQ9trdd71qz40Ko+t/R
+        2mmSRiDgRg6Rs2/evOedl7nvACiTqhkoXaDosrK90/nZophfvzTfr9+HjzfPXr++Onk+eDmX/A2+
+        Vd3I8Ksb0vLIOtK+rCyJ8a6FNRMKxa796WA6GPcHg2kDlD4lG2l5Jb2R7w2OB6Pe8bjXH26IhTea
+        gprBlw4AwH3zHS26lL6rGRx3H09KCgFzUrNtEYBib+OJwhBMEHSiujtQeyfkomtXW7sHiPc20Wjt
+        Trj93O897+4JrU0+jMc/hnx1PhrX5+XgzeLz/MPFfHFDe3pt63XVGMpqp7f3s4dvz2cHYgDKYdlw
+        L8lirAmFqQ74AAo5r0tyEr2r+2XDWqoZLNW5R+cI3gsZR0vVhaWqmDJipjQ5LGtx3kgl4pM6ELcV
+        3qaQsSGXPlZpcpIYJ8TY2A+x8MtSRQ4UGGBF5EAK426NywFXvhbY+LEoZNdL9TW2cl4otCqvSMA4
+        GHIKOWNKgC6Fb8QExgWqkHFlCTLPsCbkcARneEetUMomk0aoQhbwd8QgBbWFkNYE4sGajEAb1nUZ
+        o6EpHC3Vg3pynw97vx66f5WET4vJ2fTFxWKUXrDFd59EX7nLm2H9PyXh1Enh3fr3GXhS8OsQ/EMA
+        4uA2HaHE2zhJoCzzLHEO8daAUBfgpSAGpry2yHbd8EKBceJl5Tn+f6H0zSvFZEhBhsGau5iYw/S8
+        oFAZoQjHIGTIbRi6kRZtOMybGATBNWjvHGmh9A8R2D5/3VsXTFkd0G72SOcgLcr6vGK/Cgd7RmXG
+        mVAkTBiaKasgvmq1o06joOonO01V7MtKEvG35GLD0cmk7ad2K3eH9kcnG1S8oN0Bk+Hod7QkJUHT
+        bL7tsm0tGpfvOhxvfTYvqsI6CJVJZlxOXLFp1qrKqmQ4Hk4n/cmqP1Sdh85PAAAA//8DAEvclkdf
+        BgAA
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8c897b087e9796cb-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 25 Sep 2024 08:00:31 GMT
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cf_bm=FBEmIMiqlCLI50hDfnhkJF6Z3bG.FBc0RaIgLTHjPRs-1727251231-1.0.1.1-9vPR9_cxIqu99v_k7F8ncQA6SrRwgvfu1BEFTB_5YbwztRkg2TwG9bFJyyUS8RX.lWGMKZDWChXpClaBtHnckg;
+        path=/; expires=Wed, 25-Sep-24 08:30:31 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=p1ZkLzrc1Ibl4M58Cyx3MKwTn752vezBA9oQqfP..yc-1727251231789-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      access-control-expose-headers:
+      - X-Request-ID
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-organization:
+      - langchain
+      openai-processing-ms:
+      - '4720'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-ratelimit-limit-requests:
+      - '10000'
+      x-ratelimit-limit-tokens:
+      - '30000000'
+      x-ratelimit-remaining-requests:
+      - '9999'
+      x-ratelimit-remaining-tokens:
+      - '29999614'
+      x-ratelimit-reset-requests:
+      - 6ms
+      x-ratelimit-reset-tokens:
+      - 0s
+      x-request-id:
+      - req_53d22f712871cb52d930604792e71513
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"messages": [{"content": "Extract all relationships mentioned. Call Relationship
+      once per-relationship.\n\n<memory-system>Reflect on following interaction. Use
+      the provided tools to  retain any necessary memories about the user.</memory-system>\n\n\nGenerate
+      JSONPatches to update the existing schema instances. If you need to extract
+      or insert *new* instances of the schemas, call the relevant function(s).\n<existing>\n<instance
+      id=a4d52d29-eaa9-4795-8ad6-3392ea6ecf6c schema_type=\"Relationship\">\n{''name'':
+      ''Joanne Steine'', ''preferred_name'': ''Joanne'', ''relation_to_user'': ''old
+      friend'', ''recent_interactions'': [''user has been thinking about Joanne lately''],
+      ''notes'': ''Met in 3rd grade and were inseparable for years. Have been drifting
+      apart over the years due to life circumstances.''}\n</instance>\n<instance id=59381b98-20a0-4fb1-ab03-06a41cd85356
+      schema_type=\"Relationship\">\n{''name'': ''Anthony'', ''preferred_name'': ''Anthony'',
+      ''relation_to_user'': ''friend'', ''recent_interactions'': [''user and Anthony
+      make an effort to call each other regularly and share important moments in their
+      lives''], ''notes'': ''Despite living far apart, they manage to stay connected.''}\n</instance>\n</existing>\n",
+      "role": "system"}, {"content": "I just talked with Joanne. She told me she''s
+      going by ''Jo'' now.", "role": "user"}, {"content": "Oh, that''s interesting!
+      It''s nice that Joanne - or should I say Jo - shared that with you. How do you
+      feel about her name change?", "role": "assistant"}, {"content": "I think it
+      suits her. It''s a bit strange to get used to, but I''m happy for her. She also
+      introduced me to a great person named Nick. Nick and i became fast buds. I''m
+      going surfing with him tomorrow.\n## End of conversation\n\n<memory-system>Reflect
+      on the interaction above. What memories ought to be retained or updated?</memory-system>",
+      "role": "user"}], "model": "gpt-4o", "n": 1, "stream": false, "temperature":
+      0.7, "tool_choice": "required", "tools": [{"type": "function", "function": {"name":
+      "PatchDoc", "description": "Respond with JSONPatch operations to update the
+      existing JSON document based on the provided text and schema.", "parameters":
+      {"properties": {"json_doc_id": {"description": "The json_doc_id of the document
+      you are patching.", "type": "string"}, "planned_edits": {"description": "Think
+      step-by-step, reasoning over each required update and the corresponding JSONPatch
+      operation to accomplish it. Cite the fields in the JSONSchema you referenced
+      in developing this plan.", "type": "string"}, "patches": {"description": "A
+      list of JSONPatch operations to be applied to the previous tool call''s response.
+      If none are required, return an empty list. This field is REQUIRED.", "items":
+      {"description": "A JSON Patch document represents an operation to be performed
+      on a JSON document.\n\nNote that the op and path are ALWAYS required. Value
+      is required for ALL operations except ''remove''.", "examples": [{"op": "add",
+      "patch_value": ["some", "values"], "path": "/path/to/my_array"}, {"op": "add",
+      "patch_value": ["newer"], "path": "/path/to/my_array/1"}, {"op": "replace",
+      "patch_value": "even newer", "path": "/path/to/my_array/1"}, {"op": "remove",
+      "path": "/path/to/my_array/1"}, {"op": "replace", "patch_value": {"new": "object"},
+      "path": "/path/to/broken_object"}], "properties": {"op": {"description": "The
+      operation to be performed. Must be one of ''add'', ''remove'', ''replace''.",
+      "enum": ["add", "remove", "replace"], "type": "string"}, "path": {"description":
+      "A JSON Pointer path that references a location within the target document where
+      the operation is performed.", "type": "string"}, "value": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"items":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties": {"anyOf":
+      [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"},
+      {"type": "null"}]}, "type": "object"}, {"items": {"anyOf": [{"type": "string"},
+      {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"items": {"anyOf":
+      [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"},
+      {"type": "null"}]}, "type": "array"}, {"additionalProperties": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"type":
+      "null"}]}, "type": "object"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type":
+      "boolean"}, {"type": "number"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"type": "null"}]}, "type": "object"}, {"type": "null"}]}, "type":
+      "object"}, {"type": "null"}], "description": "The value to be used within the
+      operation. REQUIRED for ''add'', ''replace'', and ''test'' operations. Pay close
+      attention to the json schema to ensure patched document will be valid."}}, "required":
+      ["op", "path", "value"], "type": "object"}, "type": "array"}}, "required": ["json_doc_id",
+      "planned_edits", "patches"], "type": "object"}}}, {"type": "function", "function":
+      {"name": "Relationship", "description": "A relationship memory type for insertion.\n\nCall
+      for each distinct indivual the user interacts with.", "parameters": {"properties":
+      {"name": {"description": "The legal name of the person.", "type": "string"},
+      "preferred_name": {"description": "The name of the person in the relationship",
+      "type": "string"}, "relation_to_user": {"description": "The type of relationship
+      (e.g., friend, sister, brother, grandmother, colleague)", "type": "string"},
+      "recent_interactions": {"description": "List of recent interactions with this
+      person", "items": {"type": "string"}, "type": "array"}, "notes": {"description":
+      "Other important information about this individual and how they relate to the
+      user.", "type": "string"}}, "required": ["name", "preferred_name", "relation_to_user",
+      "recent_interactions", "notes"], "type": "object"}}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.openai.com/v1/chat/completions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA7RUTY/bNhC9+1cMeLY2svwV+5Z4W7SLICmKZIEmWggUOZIYUyRDUnYNw/+9oOi1
+        tV7041IfbJlv5s3jvNEcRwBEcLIGwhrqWWtk8u79Lz+16eLj5vNql9W4+fDp5132mNlH93lXkXHI
+        0OV3ZP45647p1kj0QqsIM4vUY2CdLLNlNp9k06wHWs1RhrTa+GSmkyzNZkk6TybTc2KjBUNH1vBt
+        BABw7L+DRMXxT7KGdPx80qJztEayvgQBEKtlOCHUOeE8VZ6MryDTyqMKqlUn5QDwWsuCUSmvhePn
+        OHi+9olKWZhDw7oP9X7z8OMPVTor09nj192nzaBepD6YXlDVKXbpzwC/nK9vigEQRds+9zfqWXOv
+        2U0uAKG27lpUPugmx5x8d1oVXLNC8JysISd0xucZz1YJUrpKZsvVPHlL+SKZTlcZ0gWyasFyMoac
+        GEmVQl4gF97F5C+GU4/gGwRjsUJrkUMQBbqCBx3iwWt40EAVB8p5H2qRofIglEdL+7vBvkEbeTqH
+        FjyVW+Qx9e5cPVwR+7rfjjnRJiqwaCRleIlp4vGbi5wiyInwjsoOI/6gc3Iaw4CIcv6KJAotBkLd
+        m8krri8DxXvhm+frSqRWIQda6s5Dg/a2R6yhqsa7nJyeTuSFcafBv9P4P43bfYPvZ9vdPt206eJ+
+        sWqdb8xmefg/xu13lLTvRiPMv49cNCB06qNg23OTb+x5idozf+F1EeYh4pUVqPhzxCtn+sk4uxHa
+        H+igRBY6XVHnoey4A1p5tFCiUHUYQKt5x5BDebhOWs8gHNQ6BLnOVuG3d7bn9LrV1ur9XU6eQrzS
+        Hs/vw683jGP40Qm2lQeotG3DLEC8RehcMP4fbL88Pw32kMWqc1SeF9ToZkKI1LWxunQ3C4xUQgnX
+        FBap650lzmsTa4c6fQXSvViWxFjdGl94vUUVCFfLWeQj111+RSdvV2fUa0/lAJgspn+XV3D0VPQ7
+        9bLGo0ah6itFehHa35S4g/PYFsEWtMaKfmGTyhTzjC6rWVqmJRmdRn8BAAD//wMAZ/zFSbkGAAA=
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8c897b282a5f67f0-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 25 Sep 2024 08:00:35 GMT
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cf_bm=ZwlwJJN9Lj3CMjOkOT5PaAQlJIE9MVciNSqKZk.cevg-1727251235-1.0.1.1-xFEszIBATHyyUmFiig1_05is6hGV45e_sNQwywwOatfGt7yFqTybMHnk1pBaIKM42dNyR5yt5p8ncqgwKmoHzA;
+        path=/; expires=Wed, 25-Sep-24 08:30:35 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=Z.IrjFcyw4ZB.Ul8MkBgJ7ujg_FWv.BX8et8npPljxI-1727251235169-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      access-control-expose-headers:
+      - X-Request-ID
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-organization:
+      - langchain
+      openai-processing-ms:
+      - '2406'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-ratelimit-limit-requests:
+      - '10000'
+      x-ratelimit-limit-tokens:
+      - '30000000'
+      x-ratelimit-remaining-requests:
+      - '9999'
+      x-ratelimit-remaining-tokens:
+      - '29999561'
+      x-ratelimit-reset-requests:
+      - 6ms
+      x-ratelimit-reset-tokens:
+      - 0s
+      x-request-id:
+      - req_8dac4bd909b364c537f9460850a61c07
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"messages": [{"content": "Extract all relationships mentioned. Call Relationship
+      once per-relationship.\n\n<memory-system>Reflect on following interaction. Use
+      the provided tools to  retain any necessary memories about the user.</memory-system>\n\n\nGenerate
+      JSONPatches to update the existing schema instances. If you need to extract
+      or insert *new* instances of the schemas, call the relevant function(s).\n<existing>\n<instance
+      id=d046e8b7-6cc6-47d4-9bde-0310fbf700ad schema_type=\"Relationship\">\n{''name'':
+      ''Joanne Steine'', ''preferred_name'': ''Joanne'', ''relation_to_user'': ''old
+      friend'', ''recent_interactions'': [''user has been thinking about Joanne lately''],
+      ''notes'': ''Met in 3rd grade and were inseparable for years. Have been drifting
+      apart over the years due to life circumstances.''}\n</instance>\n<instance id=09e7e335-9bcb-489e-9b30-5a1ea7a4d002
+      schema_type=\"Relationship\">\n{''name'': ''Anthony'', ''preferred_name'': ''Anthony'',
+      ''relation_to_user'': ''friend'', ''recent_interactions'': [''user and Anthony
+      make an effort to call each other regularly and share important moments in their
+      lives''], ''notes'': ''Despite living far apart, they manage to stay connected.''}\n</instance>\n</existing>\n",
+      "role": "system"}, {"content": "I just talked with Joanne. She told me she''s
+      going by ''Jo'' now.", "role": "user"}, {"content": "Oh, that''s interesting!
+      It''s nice that Joanne - or should I say Jo - shared that with you. How do you
+      feel about her name change?", "role": "assistant"}, {"content": "I think it
+      suits her. It''s a bit strange to get used to, but I''m happy for her. She also
+      introduced me to a great person named Nick. Nick and i became fast buds. I''m
+      going surfing with him tomorrow.\n## End of conversation\n\n<memory-system>Reflect
+      on the interaction above. What memories ought to be retained or updated?</memory-system>",
+      "role": "user"}], "model": "gpt-4o", "n": 1, "stream": false, "temperature":
+      0.7, "tool_choice": "required", "tools": [{"type": "function", "function": {"name":
+      "PatchDoc", "description": "Respond with JSONPatch operations to update the
+      existing JSON document based on the provided text and schema.", "parameters":
+      {"properties": {"json_doc_id": {"description": "The json_doc_id of the document
+      you are patching.", "type": "string"}, "planned_edits": {"description": "Think
+      step-by-step, reasoning over each required update and the corresponding JSONPatch
+      operation to accomplish it. Cite the fields in the JSONSchema you referenced
+      in developing this plan.", "type": "string"}, "patches": {"description": "A
+      list of JSONPatch operations to be applied to the previous tool call''s response.
+      If none are required, return an empty list. This field is REQUIRED.", "items":
+      {"description": "A JSON Patch document represents an operation to be performed
+      on a JSON document.\n\nNote that the op and path are ALWAYS required. Value
+      is required for ALL operations except ''remove''.", "examples": [{"op": "add",
+      "patch_value": ["some", "values"], "path": "/path/to/my_array"}, {"op": "add",
+      "patch_value": ["newer"], "path": "/path/to/my_array/1"}, {"op": "replace",
+      "patch_value": "even newer", "path": "/path/to/my_array/1"}, {"op": "remove",
+      "path": "/path/to/my_array/1"}, {"op": "replace", "patch_value": {"new": "object"},
+      "path": "/path/to/broken_object"}], "properties": {"op": {"description": "The
+      operation to be performed. Must be one of ''add'', ''remove'', ''replace''.",
+      "enum": ["add", "remove", "replace"], "type": "string"}, "path": {"description":
+      "A JSON Pointer path that references a location within the target document where
+      the operation is performed.", "type": "string"}, "value": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"items":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties": {"anyOf":
+      [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"},
+      {"type": "null"}]}, "type": "object"}, {"items": {"anyOf": [{"type": "string"},
+      {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"items": {"anyOf":
+      [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"},
+      {"type": "null"}]}, "type": "array"}, {"additionalProperties": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"type":
+      "null"}]}, "type": "object"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type":
+      "boolean"}, {"type": "number"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"type": "null"}]}, "type": "object"}, {"type": "null"}]}, "type":
+      "object"}, {"type": "null"}], "description": "The value to be used within the
+      operation. REQUIRED for ''add'', ''replace'', and ''test'' operations. Pay close
+      attention to the json schema to ensure patched document will be valid."}}, "required":
+      ["op", "path", "value"], "type": "object"}, "type": "array"}}, "required": ["json_doc_id",
+      "planned_edits", "patches"], "type": "object"}}}, {"type": "function", "function":
+      {"name": "Relationship", "description": "A relationship memory type for insertion.\n\nCall
+      for each distinct indivual the user interacts with.", "parameters": {"properties":
+      {"name": {"description": "The legal name of the person.", "type": "string"},
+      "preferred_name": {"description": "The name of the person in the relationship",
+      "type": "string"}, "relation_to_user": {"description": "The type of relationship
+      (e.g., friend, sister, brother, grandmother, colleague)", "type": "string"},
+      "recent_interactions": {"description": "List of recent interactions with this
+      person", "items": {"type": "string"}, "type": "array"}, "notes": {"description":
+      "Other important information about this individual and how they relate to the
+      user.", "type": "string"}}, "required": ["name", "preferred_name", "relation_to_user",
+      "recent_interactions", "notes"], "type": "object"}}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.openai.com/v1/chat/completions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA7RUTW/bOBC9+1cMeOnFciXHtmzfErRIk6DpdhcBClSBQJOjj5riqCTV1DD83xeU
+        HFlx0N3FAtVBkPk4b968Gc9+BMBKydbARMGdqGoVXF59uNe4Wn6/u6yjq0/VVbHaySje1fOrzYyN
+        fQRtvqFwz1ETQVWt0JWkO1gY5A49axRP4+k8ildRC1QkUfmwvHbBjIJpOJ0F4TyILo6BBZUCLVvD
+        1xEAwL59e4la4k+2hnD8fFKhtTxHtu4vATBDyp8wbm1pHdeOjU+gIO1Qe9W6UWoAOCKVCq7UKXH3
+        7AffJ5+4Uun3u6cl3737sL25uS7y6f3TX/n9Ze7iQb6Oele3grJGi96fAd6fr8+SATDNqzb2D+5E
+        8Y7EWSwA4yZvKtTO62b7hH2zpFNJIi1lwtaQMBnOFrjcxMFCiEUwi+UsWG0kBuFFFGabLA5DLhM2
+        hoTVimuNMkVZOtsFP9SSO4Rb8sgbC7XBDI1BCV4ZOIJbAq4lcCmBg0GB2kGpHRreFgWaXKlzcAV3
+        4AqExqIBx9UWJTyVrngmUMiNRgl8Q42DAk2XQRRc5zg5CvQuYCvt6z5hVHciDdaKC+zvFN3x215s
+        6qk6+AdXDXb4LSXsMIYBEZfyFUlXUjooyb4NXnE9/M+qDo8H9qKjh8Gvw/g/zWH8+f2P6x2/m9M2
+        LOIv2Y1qvmT6AX/HHP6JirceFGX977PY2e79uS/F9mjtWVNeoubInzpK/aR0eGZK1PL5xqt+tPOQ
+        sI/oJ8xQk/f2b1B4uzNuHXQkdgLX5AfSNiZrB5NydL4xjioyhp4mCXv0iTQ5PP4LbrQzJBuBEjY7
+        uKUJfG5KsVW7PsGRO2H/1M7++3GweAxmjeXquJFGZ51nivLa0MaebSyWlbq0RWqQ27ZjzDqqu9w+
+        T5uBNS+2I6sNVbVLHW1Re8JVvOr42Gl5n9BoOT+ijhxXAyBazH4Vl0p0vGyXaL+3O42lzk8UYS+0
+        rZTZnXVYpb4haGpTthuaZXWKF/H8YrqMZgs2Ooz+BgAA//8DACq8rY+qBgAA
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8c8988cf1c069e68-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 25 Sep 2024 08:09:54 GMT
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cf_bm=a18vDN85D.X63NyarK0V.3Tb2WIP0kva.UVTACFTAE8-1727251794-1.0.1.1-AZOMqXtdK6eqaF59HyixxeP4pUBjgBclHRQlO34aQOkY9rxaMvMWe3z98Igm1t5tDTQ_fRUaoc1MOFzYka.7uw;
+        path=/; expires=Wed, 25-Sep-24 08:39:54 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=sbWma1dfiYPIkKzKcsNteuXR87VKOsbpE6sro19lwDY-1727251794273-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      access-control-expose-headers:
+      - X-Request-ID
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-organization:
+      - langchain
+      openai-processing-ms:
+      - '2953'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-ratelimit-limit-requests:
+      - '10000'
+      x-ratelimit-limit-tokens:
+      - '30000000'
+      x-ratelimit-remaining-requests:
+      - '9999'
+      x-ratelimit-remaining-tokens:
+      - '29999561'
+      x-ratelimit-reset-requests:
+      - 6ms
+      x-ratelimit-reset-tokens:
+      - 0s
+      x-request-id:
+      - req_91075214deb33d442bb12a602bb7e18a
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"messages": [{"content": "Extract all relationships mentioned. Call Relationship
+      once per-relationship.\n\n<memory-system>Reflect on following interaction. Use
+      the provided tools to  retain any necessary memories about the user.</memory-system>\n\n\nGenerate
+      JSONPatches to update the existing schema instances. If you need to extract
+      or insert *new* instances of the schemas, call the relevant function(s).\n<existing>\n<instance
+      id=5f412532-234a-4260-bb6d-0fb8d89f7c3b schema_type=\"Relationship\">\n{''name'':
+      ''Joanne Steine'', ''preferred_name'': ''Joanne'', ''relation_to_user'': ''old
+      friend'', ''recent_interactions'': [''user has been thinking about Joanne lately''],
+      ''notes'': ''Met in 3rd grade and were inseparable for years. Have been drifting
+      apart over the years due to life circumstances.''}\n</instance>\n<instance id=d4ad2570-f578-4ec6-8618-6f0f914acc89
+      schema_type=\"Relationship\">\n{''name'': ''Anthony'', ''preferred_name'': ''Anthony'',
+      ''relation_to_user'': ''friend'', ''recent_interactions'': [''user and Anthony
+      make an effort to call each other regularly and share important moments in their
+      lives''], ''notes'': ''Despite living far apart, they manage to stay connected.''}\n</instance>\n</existing>\n",
+      "role": "system"}, {"content": "I just talked with Joanne. She told me she''s
+      going by ''Jo'' now.", "role": "user"}, {"content": "Oh, that''s interesting!
+      It''s nice that Joanne - or should I say Jo - shared that with you. How do you
+      feel about her name change?", "role": "assistant"}, {"content": "I think it
+      suits her. It''s a bit strange to get used to, but I''m happy for her. She also
+      introduced me to a great person named Nick. Nick and i became fast buds. I''m
+      going surfing with him tomorrow.\n## End of conversation\n\n<memory-system>Reflect
+      on the interaction above. What memories ought to be retained or updated?</memory-system>",
+      "role": "user"}], "model": "gpt-4o", "n": 1, "stream": false, "temperature":
+      0.7, "tool_choice": "required", "tools": [{"type": "function", "function": {"name":
+      "PatchDoc", "description": "Respond with JSONPatch operations to update the
+      existing JSON document based on the provided text and schema.", "parameters":
+      {"properties": {"json_doc_id": {"description": "The json_doc_id of the document
+      you are patching.", "type": "string"}, "planned_edits": {"description": "Think
+      step-by-step, reasoning over each required update and the corresponding JSONPatch
+      operation to accomplish it. Cite the fields in the JSONSchema you referenced
+      in developing this plan.", "type": "string"}, "patches": {"description": "A
+      list of JSONPatch operations to be applied to the previous tool call''s response.
+      If none are required, return an empty list. This field is REQUIRED.", "items":
+      {"description": "A JSON Patch document represents an operation to be performed
+      on a JSON document.\n\nNote that the op and path are ALWAYS required. Value
+      is required for ALL operations except ''remove''.", "examples": [{"op": "add",
+      "patch_value": ["some", "values"], "path": "/path/to/my_array"}, {"op": "add",
+      "patch_value": ["newer"], "path": "/path/to/my_array/1"}, {"op": "replace",
+      "patch_value": "even newer", "path": "/path/to/my_array/1"}, {"op": "remove",
+      "path": "/path/to/my_array/1"}, {"op": "replace", "patch_value": {"new": "object"},
+      "path": "/path/to/broken_object"}], "properties": {"op": {"description": "The
+      operation to be performed. Must be one of ''add'', ''remove'', ''replace''.",
+      "enum": ["add", "remove", "replace"], "type": "string"}, "path": {"description":
+      "A JSON Pointer path that references a location within the target document where
+      the operation is performed.", "type": "string"}, "value": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"items":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties": {"anyOf":
+      [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"},
+      {"type": "null"}]}, "type": "object"}, {"items": {"anyOf": [{"type": "string"},
+      {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"items": {"anyOf":
+      [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"},
+      {"type": "null"}]}, "type": "array"}, {"additionalProperties": {"anyOf": [{"type":
+      "string"}, {"type": "integer"}, {"type": "boolean"}, {"type": "number"}, {"type":
+      "null"}]}, "type": "object"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type":
+      "boolean"}, {"type": "number"}, {"type": "null"}]}, "type": "array"}, {"additionalProperties":
+      {"anyOf": [{"type": "string"}, {"type": "integer"}, {"type": "boolean"}, {"type":
+      "number"}, {"type": "null"}]}, "type": "object"}, {"type": "null"}]}, "type":
+      "object"}, {"type": "null"}], "description": "The value to be used within the
+      operation. REQUIRED for ''add'', ''replace'', and ''test'' operations. Pay close
+      attention to the json schema to ensure patched document will be valid."}}, "required":
+      ["op", "path", "value"], "type": "object"}, "type": "array"}}, "required": ["json_doc_id",
+      "planned_edits", "patches"], "type": "object"}}}, {"type": "function", "function":
+      {"name": "Relationship", "description": "A relationship memory type for insertion.\n\nCall
+      for each distinct indivual the user interacts with.", "parameters": {"properties":
+      {"name": {"description": "The legal name of the person.", "type": "string"},
+      "preferred_name": {"description": "The name of the person in the relationship",
+      "type": "string"}, "relation_to_user": {"description": "The type of relationship
+      (e.g., friend, sister, brother, grandmother, colleague)", "type": "string"},
+      "recent_interactions": {"description": "List of recent interactions with this
+      person", "items": {"type": "string"}, "type": "array"}, "notes": {"description":
+      "Other important information about this individual and how they relate to the
+      user.", "type": "string"}}, "required": ["name", "preferred_name", "relation_to_user",
+      "recent_interactions", "notes"], "type": "object"}}}]}'
+    headers: {}
+    method: POST
+    uri: https://api.openai.com/v1/chat/completions
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAwAAAP//tFRNb+M2EL37Vwx4ycVKZVmKE992E/TD2O4u2m6BdhUIFDWSmFAclqTi
+        Gob/e0FJsR0D/bhUB33wzZs3nEfNfgbAZMXWwETLveiMit69//5zln38+d0P5Wabdk8//vIpE99+
+        t/vwsKwNmwcGlU8o/CvrWlBnFHpJeoSFRe4xZF2sklWSLW5XiwHoqEIVaI3xUUpREidpFGfRYjkR
+        W5ICHVvD1xkAwH64hxJ1hX+yNcTz15UOneMNsvUxCIBZUmGFceek81x7Nj+BgrRHHarWvVJngCdS
+        heBKnYTHa3/2fuoTV6owu1b0H5rt/eaP33TprIrTX39/+XR/pjem3pmhoLrX4tifM/y4vr4QA2Ca
+        dwP3M/eifSBxwQVg3DZ9h9qHutk+Z0+OdFGRKGSVszXkLKvTRZItkyhZpjxKk5s4KsubKorr8ra6
+        vatXYlnmbA45M4prjVWBlfRuJH8xFfcIGwrIlQNjsUZrsYJQGXiCqw1dgZNaILgWQeqabIcV+Bah
+        d2iBamjRgsbtxEYt8HpSDNvCQevrPmdkRlWLRnGBx5h2XP7mqF4E9RF+4arHEd9Qzg6PB/amRYez
+        r8P8Pxn70OL79PllG9938c3DzV3nfGvuV7v/w9ifUPEQ41pp/t3ccdthrx+leJ76c9GUt6id8hee
+        imDHiNdWoq5eIwRqX0jt0fKh3tGPnH0J9nXoIaQD31rqmxY2BFwP/u6gRBGOQc2dh7Kv3GTrQJQO
+        GpK6AdfbOjy30rdTKurIWtpe5+wxxGvy6E6Vw5Y7kNpbqnoRjhKdTlO5gw1d5+yfXD6+P5794Bbr
+        3nE1/fmziwPBFDXGUukuJgOrpZauLSxyNxjJnCczagedQYH1b6YQM5Y64wtPz6hDwrtVNuZjpyF5
+        QhfZ7YR68lydAYvl8u94RYWey2FYHefjWKPUzSlFfCx02ClzO+exK4IdaI2VwyRktSmyhK/qNC7j
+        ks0Os78AAAD//wMA+kYBQRIGAAA=
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8c898abe1f92645f-SJC
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 25 Sep 2024 08:11:12 GMT
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - __cf_bm=o6RehfSVBK.f9uTS4I70DRIw2Ec0vtoSsbzknUe6Wfo-1727251872-1.0.1.1-bPTJHC0S8PvCxCvfarVctYkLl84r3h4l3gJ8HYUHPgW.uMIFwJ3suf6f68xsKYonT_yoRMRKwsxRTh1cMQ8A4A;
+        path=/; expires=Wed, 25-Sep-24 08:41:12 GMT; domain=.api.openai.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=nj3Kz9OSkh4LQ8FpzrEKK8kfqWxQJ5OlNJ71VgWWOas-1727251872922-0.0.1.1-604800000;
+        path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      access-control-expose-headers:
+      - X-Request-ID
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-organization:
+      - langchain
+      openai-processing-ms:
+      - '1783'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-ratelimit-limit-requests:
+      - '10000'
+      x-ratelimit-limit-tokens:
+      - '30000000'
+      x-ratelimit-remaining-requests:
+      - '9999'
+      x-ratelimit-remaining-tokens:
+      - '29999561'
+      x-ratelimit-reset-requests:
+      - 6ms
+      x-ratelimit-reset-tokens:
+      - 0s
+      x-request-id:
+      - req_9d1efa21b4c9861fbe8a273e12a72785
+    status:
+      code: 200
+      message: OK
+version: 1

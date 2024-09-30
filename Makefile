@@ -2,16 +2,16 @@
 
 
 evals:
-	LANGCHAIN_TEST_CACHE=tests/evals/cassettes poetry run python -m pytest -p no:asyncio  --max-asyncio-tasks 4 tests/evals
+	LANGCHAIN_TEST_CACHE=tests/evals/cassettes python -m python -m pytest -p no:asyncio  --max-asyncio-tasks 4 tests/evals
 
 lint:
-	poetry run ruff check .
-	poetry run mypy .
+	python -m ruff check .
+	python -m mypy .
 
 format:
 	ruff check --select I --fix
-	poetry run ruff format .
-	poetry run ruff check . --fix
+	python -m ruff format .
+	python -m ruff check . --fix
 
 build:
 	poetry build

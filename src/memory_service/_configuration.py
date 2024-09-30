@@ -1,11 +1,8 @@
-from __future__ import annotations
+import os
+from dataclasses import dataclass, field, fields
+from typing import Literal, Optional, TypedDict
 
-from typing import Any, Dict, List, Optional
-
-from langchain_core.messages import AnyMessage
-from langchain_core.pydantic_v1 import BaseModel
-from langgraph.graph import add_messages
-from typing_extensions import Annotated, Literal, TypedDict
+from langchain_core.runnables import RunnableConfig
 
 
 class FunctionSchema(TypedDict):
@@ -17,12 +14,13 @@ class FunctionSchema(TypedDict):
     """The JSON Schema for the memory."""
 
 
-class MemoryConfig(TypedDict, total=False):
+@dataclass(kw_only=True)
+class MemoryConfig:
     function: FunctionSchema
     """The function to use for the memory assistant."""
-    system_prompt: Optional[str]
+    system_prompt: Optional[str] = ""
     """The system prompt to use for the memory assistant."""
-    update_mode: Literal["patch", "insert"]
+    update_mode: Literal["patch", "insert"] = field(default="patch")
     """Whether to continuously patch the memory, or treat each new
 
     generation as a new memory.
@@ -36,41 +34,31 @@ class MemoryConfig(TypedDict, total=False):
     """
 
 
-class GraphConfig(TypedDict, total=False):
-    delay: float
+@dataclass(kw_only=True)
+class Configuration:
+    delay: float = 60  # seconds
     """The delay in seconds to wait before considering a conversation complete.
     
     Default is 60 seconds.
     """
-    model: str
-    """The model to use for generating memories.
-     
-    Defaults to Fireworks's "accounts/fireworks/models/firefunction-v2"
-    """
-    schemas: dict[str, MemoryConfig]
+    model: str = "gpt-4o" # "claude-3-5-sonnet-20240620"
+    """The model to use for generating memories. """
+    schemas: dict = field(default_factory=dict)
     """The schemas for the memory assistant."""
     thread_id: str
     """The thread ID of the conversation."""
-    user_id: str
+    user_id: str = "default"
     """The ID of the user to remember in the conversation."""
 
-
-class State(TypedDict):
-    messages: Annotated[List[AnyMessage], add_messages]
-    """The messages in the conversation."""
-    eager: bool
-
-
-class SingleExtractorState(State):
-    function_name: str
-    responses: list[BaseModel]
-    user_state: Optional[Dict[str, Any]]
-
-
-__all__ = [
-    "State",
-    "GraphConfig",
-    "SingleExtractorState",
-    "FunctionSchema",
-    "MemoryConfig",
-]
+    @classmethod
+    def from_runnable_config(cls, config: RunnableConfig):
+        configurable = config["configurable"]
+        values = {
+            f.name: os.environ.get(f.name.upper(), configurable.get(f.name))
+            for f in fields(cls)
+            if f.init
+        }
+        values["schemas"] = {
+            k: MemoryConfig(**v) for k, v in (values["schemas"] or {}).items()
+        }
+        return cls(**{k: v for k, v in values.items() if v})
