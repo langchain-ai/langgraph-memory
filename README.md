@@ -1,6 +1,6 @@
 # LangGraph Memory Service
 
-This repo provides a simple example of memory service you can build and deploy using LanGraph.
+This repo provides a simple example of memory service you can build and deploy using LangGraph.
 
 Inspired by papers like [MemGPT](https://memgpt.ai/) and distilled from our own works on long-term memory, the graph
 extracts memories from chat interactions and persists them to a database. This information can later be read or queried semantically
